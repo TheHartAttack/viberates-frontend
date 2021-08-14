@@ -37,7 +37,7 @@ let cssConfig = {
 let config = {
   entry: "./app/Main.js",
   output: {
-    publicPath: "./",
+    publicPath: "/",
     path: path.resolve(__dirname, "app"),
     filename: "bundled.js"
   },
@@ -96,7 +96,7 @@ if (currentTask == "build" || currentTask == "webpackBuild") {
   cssConfig.use.unshift(MiniCssExtractPlugin.loader)
   config.mode = "production"
   config.output = {
-    publicPath: "./",
+    publicPath: "/",
     path: path.resolve(__dirname, "dist"),
     filename: "[name].[chunkhash].js",
     chunkFilename: "[name].[chunkhash].js"
