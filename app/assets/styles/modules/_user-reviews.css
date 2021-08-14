@@ -1,0 +1,42 @@
+.user-reviews {
+  grid-column: 1/7;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  align-items: flex-start;
+
+  @media only screen and (min-width: $medium) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only screen and (min-width: $large) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  &__column {
+    display: grid;
+    gap: 20px;
+  }
+
+  &__load {
+    grid-column: 2/3;
+    justify-self: center;
+    cursor: pointer;
+    border: none;
+    background-color: $red;
+    color: $grey;
+    padding: 10px;
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    font-weight: $light;
+    transition: background-color 250ms ease-out;
+
+    &:hover {
+      background-color: color-mod($red shade(25%));
+    }
+  }
+
+  &__loading {
+    margin: 6px;
+  }
+}

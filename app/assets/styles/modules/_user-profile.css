@@ -1,0 +1,88 @@
+.user-profile {
+  grid-column: 1/7;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  place-items: center;
+
+  @media only screen and (min-width: $medium) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+  }
+
+  &__info {
+    display: grid;
+    gap: 10px;
+    place-items: center;
+    user-select: none;
+  }
+
+  &__username {
+    text-transform: uppercase;
+    font-size: 2.25rem;
+    line-height: 2.25rem;
+    height: 2.25rem;
+  }
+
+  &__likes {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+    background-color: $black;
+    color: $grey;
+    padding: 5px 10px;
+    font-size: 1rem;
+    line-height: 1rem;
+    height: 1rem;
+    border-radius: calc(1rem + 20px);
+    place-items: center;
+
+    & > svg {
+      font-size: 0.875rem;
+      line-height: 0.875rem;
+      height: 0.875rem;
+    }
+  }
+
+  &__links {
+    width: 200px;
+    display: grid;
+    gap: 5px;
+    justify-content: stretch;
+  }
+
+  &__button {
+    text-decoration: none;
+    background-color: $red;
+    color: $grey;
+    padding: 10px;
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    font-weight: $light;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    transition: background-color 250ms ease-out;
+    outline: none;
+
+    &:hover {
+      background-color: color-mod($red shade(50%));
+    }
+
+    &:disabled {
+      transition: none;
+      background-color: color-mod($black tint(25%));
+      cursor: auto;
+    }
+
+    &:focus-visible {
+      border-radius: 5px;
+      border: 2px solid $black;
+    }
+  }
+}

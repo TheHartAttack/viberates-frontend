@@ -1,0 +1,103 @@
+.hot-albums,
+.top-rated,
+.new-releases,
+.top-users,
+.recent-reviews,
+.tag {
+  grid-column: 1/7;
+  display: grid;
+  gap: 20px;
+
+  @media only screen and (min-width: $medium) {
+    gap: 50px;
+  }
+
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 20px;
+
+    @media only screen and (min-width: $medium) {
+      grid-template-columns: repeat(2, 1fr);
+      justify-content: space-between;
+    }
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    height: 1.25rem;
+    text-transform: uppercase;
+    font-weight: 600;
+
+    @media only screen and (min-width: $medium) {
+      justify-self: start;
+    }
+  }
+
+  &__select {
+    @media only screen and (min-width: $medium) {
+      justify-self: end;
+    }
+  }
+
+  &__body {
+    display: grid;
+    gap: 10px;
+  }
+
+  &__more {
+    grid-column: 1/-1;
+    justify-self: center;
+    width: 100px;
+    background-color: $red;
+    color: $grey;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: $bold;
+    font-size: 0.875rem;
+    line-height: 0.875rem;
+    cursor: pointer;
+    transition: background-color 250ms ease-out;
+
+    &:hover {
+      background-color: color-mod($red shade(50%));
+    }
+
+    &:disabled {
+      transition: none;
+      background-color: color-mod($black tint(25%));
+      cursor: auto;
+    }
+  }
+
+  &__none {
+    text-align: center;
+  }
+}
+
+.hot-albums,
+.top-rated,
+.new-releases,
+.tag {
+  &__body {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+.recent-reviews {
+  &__body {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+
+    @media only screen and (min-width: $medium) {
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+  }
+}
+
+.top-users {
+  &__body {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

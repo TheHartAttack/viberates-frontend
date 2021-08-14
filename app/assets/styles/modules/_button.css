@@ -1,0 +1,35 @@
+.button {
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: $normal;
+  text-transform: uppercase;
+  background-color: $red;
+  color: $grey;
+  padding: 10px;
+  display: grid;
+  grid-auto-flow: column;
+  place-items: center;
+  text-align: center;
+  gap: 10px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 250ms ease-out;
+
+  &:hover {
+    background-color: color-mod($red shade(50%));
+  }
+
+  &:disabled {
+    transition: none;
+    background-color: color-mod($black tint(25%));
+    cursor: auto;
+  }
+
+  &--cancel {
+    background-color: color-mod($black tint(50%));
+
+    &:hover {
+      background-color: color-mod($black tint(25%));
+    }
+  }
+}

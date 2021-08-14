@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Futura";
+  src: url("/assets/fonts/Futura-Light.ttf") format("opentype");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("/assets/fonts/Futura.ttf") format("opentype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("/assets/fonts/Futura-Bold.ttf") format("opentype");
+  font-weight: 900;
+}

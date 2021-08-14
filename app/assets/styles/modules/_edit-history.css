@@ -1,0 +1,158 @@
+.edit-history {
+  grid-column: 1/-1;
+  display: grid;
+  gap: 20px;
+
+  @media only screen and (min-width: $large) {
+    grid-column: 3/7;
+  }
+
+  &__title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: $normal;
+    font-size: 1.25rem;
+    height: 1.25rem;
+  }
+
+  &__none {
+    grid-column: 1/-1;
+    text-align: center;
+  }
+
+  &__queue {
+    width: 100%;
+    max-width: 1080px;
+    justify-self: center;
+    display: grid;
+    gap: 20px;
+  }
+
+  &__item {
+    padding: 20px;
+    background-color: $black;
+    color: $grey;
+    display: grid;
+    gap: 20px;
+  }
+
+  &__header {
+    font-size: 0.75rem;
+    font-weight: $light;
+    justify-self: stretch;
+    text-align: center;
+    border-bottom: 1px dashed color-mod($grey a(0.25));
+    padding-bottom: 20px;
+    grid-column: 1/-1;
+  }
+
+  &__user {
+    text-decoration: none;
+    color: $grey;
+    font-weight: $bold;
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: center;
+    justify-items: flex-start;
+    justify-self: center;
+  }
+
+  &__details {
+    display: grid;
+    gap: 20px;
+  }
+
+  &__change-label {
+    grid-column: 1/-1;
+    font-size: 0.875rem;
+    font-weight: $light;
+  }
+
+  &__change-data {
+    justify-self: flex-start;
+
+    & > img {
+      width: 100%;
+      max-width: 200px;
+      border: 1px solid color-mod($grey a(0.25));
+    }
+
+    &--artist-image > img {
+      max-width: 300px;
+      width: 100%;
+    }
+  }
+
+  &__footer {
+    display: grid;
+    gap: 10px;
+    align-content: center;
+    justify-content: center;
+    padding-top: 20px;
+    border-top: 1px dashed color-mod($grey a(0.25));
+
+    & > .loading {
+      height: 2.25rem;
+      display: grid;
+      align-items: center;
+    }
+  }
+
+  &__revert {
+    width: 100px;
+    height: calc(1rem + 20px);
+    cursor: pointer;
+    background-color: $red;
+    border: none;
+    color: $grey;
+    padding: 10px;
+    transition: all 250ms ease-out;
+    display: grid;
+    grid-template-columns: 1fr 1rem;
+    justify-items: center;
+    align-items: center;
+    gap: 10px;
+
+    & > span {
+      line-height: 1rem;
+    }
+
+    &:hover {
+      background-color: color-mod($red shade(50%));
+    }
+
+    &:disabled {
+      transition: none;
+      background-color: color-mod($black tint(25%));
+      cursor: auto;
+    }
+  }
+
+  &__more {
+    width: 100px;
+    justify-self: center;
+    cursor: pointer;
+    border: none;
+    background-color: $red;
+    color: $grey;
+    padding: 10px;
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    font-weight: $normal;
+    transition: background-color 250ms ease-out;
+
+    &:hover {
+      background-color: color-mod($red shade(25%));
+    }
+
+    &:disabled {
+      transition: none;
+      background-color: color-mod($black tint(25%));
+      cursor: auto;
+    }
+  }
+}

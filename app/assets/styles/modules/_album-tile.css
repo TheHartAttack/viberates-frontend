@@ -1,0 +1,75 @@
+.album-tile {
+  position: relative;
+  aspect-ratio: 1/1;
+  background-color: $black;
+  border: 1px solid $black;
+  cursor: pointer;
+  overflow: hidden;
+
+  &__image {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__no-image {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 4rem;
+    color: $grey;
+  }
+
+  &__info {
+    background-color: color-mod($black a(0.875));
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    grid-gap: 10px 20px;
+    color: $grey;
+    text-transform: uppercase;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 250ms ease-out;
+
+    &--no-image {
+      opacity: 1;
+    }
+  }
+
+  &__title {
+    font-size: 1rem;
+    line-height: 1rem;
+    font-weight: bold;
+    hyphens: auto;
+  }
+
+  &__artist {
+    font-size: 0.875rem;
+  }
+
+  &__rating {
+    margin-top: 20px;
+    background-color: $red;
+    font-size: 1.25rem;
+    font-weight: 900;
+    height: 2.5rem;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:hover {
+    .album-tile__info {
+      opacity: 1;
+    }
+  }
+}

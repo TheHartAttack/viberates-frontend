@@ -1,0 +1,70 @@
+.user-tile {
+  position: relative;
+  border-radius: 100%;
+  overflow: hidden;
+  aspect-ratio: 1/1;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background-color: $black;
+  color: $grey;
+  clip-path: circle(50%);
+
+  & > svg {
+    font-size: 4rem;
+  }
+
+  &__image {
+    width: 100%;
+    clip-path: circle(50%);
+  }
+
+  &__info {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: color-mod($black a(0.75));
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 10px;
+    opacity: 1;
+    transition: background-color 250ms ease-out, color 250ms ease-out;
+
+    &:hover {
+      color: $red;
+      background-color: color-mod($black a(0.875));
+
+      & > .user-tile__likes {
+        background-color: $red;
+        color: $grey;
+      }
+    }
+  }
+
+  &__likes {
+    background-color: $grey;
+    color: $black;
+    border-radius: 1rem;
+    padding: 5px;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 5px;
+    transition: background-color 250ms ease-out, color 250ms ease-out;
+
+    & > span {
+      font-size: 0.875rem;
+      line-height: 0.875rem;
+      position: relative;
+      top: 1px;
+    }
+
+    & > svg {
+      font-size: 0.75rem;
+      line-height: 0.75rem;
+    }
+  }
+}

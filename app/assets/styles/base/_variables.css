@@ -1,0 +1,24 @@
+/*Colours*/
+$black: #1a1a1a;
+$grey: #e6e6e6;
+$white: #fff;
+$red: #f33;
+$green: #3c773d;
+
+/*Font Weights*/
+$light: 300;
+$normal: 600;
+$bold: 900;
+
+/*Media Query Break Points*/
+$tinySmall: 180px;
+$small: 360px;
+$smallMedium: 540px;
+$medium: 720px;
+$mediumLarge: 900px;
+$large: 1080px;
+$largeHuge: 1260px;
+$huge: 1440px;
+
+/*Misc*/
+$headerHeight: calc(2.5rem + 40px);

@@ -1,0 +1,53 @@
+.artist-tile {
+  position: relative;
+  aspect-ratio: 1.5/1;
+  background-color: $black;
+  border: 1px solid $black;
+  cursor: pointer;
+  overflow: hidden;
+
+  &__image {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__no-image {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-size: 4rem;
+    color: $grey;
+  }
+
+  &__info {
+    background-color: color-mod($black a(0.75));
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    grid-gap: 10px 20px;
+    color: $grey;
+    text-transform: uppercase;
+    opacity: 1;
+    transition: background-color 250ms ease-out, color 250ms ease-out;
+  }
+
+  &__artist {
+    font-size: 1.5rem;
+    font-weight: $bold;
+  }
+
+  &:hover {
+    .artist-tile__info {
+      background-color: color-mod($black a(0.875));
+      color: $red;
+    }
+  }
+}

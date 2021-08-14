@@ -1,0 +1,60 @@
+.loading {
+  grid-column: 1/-1;
+  text-align: center;
+  justify-self: center;
+  align-self: center;
+  font-size: 3rem;
+  animation: loading 1000ms infinite linear;
+
+  &--12 {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+  }
+
+  &--14 {
+    font-size: 0.875rem;
+    line-height: 0.875rem;
+  }
+
+  &--16 {
+    font-size: 1rem;
+    line-height: 1rem;
+  }
+
+  &--18 {
+    font-size: 1.125rem;
+    line-height: 1.125rem;
+  }
+
+  &--20 {
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+  }
+
+  &--22 {
+    font-size: 1.375rem;
+    line-height: 1.375rem;
+  }
+
+  &--24 {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
+
+  &--first-col {
+    grid-column: 1/2;
+  }
+
+  &--grey {
+    color: $grey;
+  }
+
+  &--generated {
+    height: 3rem;
+    padding: 50px;
+
+    & > svg {
+      height: 3rem;
+    }
+  }
+}

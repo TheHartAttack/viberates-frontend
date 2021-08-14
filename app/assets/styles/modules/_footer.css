@@ -1,0 +1,17 @@
+.footer {
+  padding: 20px;
+  background-color: $black;
+  color: $grey;
+  display: grid;
+  place-items: center;
+
+  &__logo {
+    fill: $white;
+    height: 20px;
+    transition: fill 250ms ease-out;
+
+    &:hover {
+      fill: color-mod($white shade(50%));
+    }
+  }
+}

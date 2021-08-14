@@ -1,0 +1,6 @@
+.shell {
+  display: grid;
+  width: 100%;
+  align-content: flex-start;
+  align-items: flex-start;
+}

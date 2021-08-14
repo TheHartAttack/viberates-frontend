@@ -1,0 +1,168 @@
+.comments {
+  display: grid;
+  gap: 20px;
+
+  &__form {
+    display: grid;
+    gap: 20px;
+    align-items: flex-start;
+    justify-items: flex-end;
+    margin: 0 0 20px;
+  }
+
+  &__input {
+    resize: none;
+    padding: 10px;
+    background-color: unset;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  &__buttons {
+    display: grid;
+    gap: 10px;
+    grid-auto-flow: column;
+  }
+
+  &__button {
+    border-radius: 5px;
+    padding: 10px;
+    color: $black;
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    font-weight: $normal;
+    cursor: pointer;
+    border: none;
+    min-width: 125px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    place-items: center;
+    text-transform: uppercase;
+    transition: background-color 250ms ease-out;
+
+    & > .loading {
+      line-height: 0.75rem;
+    }
+  }
+
+  &__cancel {
+    background-color: color-mod($black tint(75%));
+
+    &:hover {
+      background-color: color-mod($black tint(50%));
+    }
+  }
+
+  &__submit {
+    background-color: $red;
+    color: $grey;
+
+    &:hover {
+      background-color: color-mod($red shade(50%));
+    }
+
+    &:disabled {
+      transition: none;
+      background-color: color-mod($black tint(25%));
+      cursor: auto;
+    }
+  }
+
+  &__comment {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 1fr;
+    gap: 10px 20px;
+    align-items: flex-start;
+  }
+
+  &__image {
+    grid-area: 1/1/3/2;
+    background-color: $black;
+    color: $grey;
+    border-radius: 100%;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    position: relative;
+
+    &-icon {
+      position: absolute;
+      color: $grey;
+    }
+  }
+
+  &__author-image {
+    width: 100%;
+    z-index: 9;
+  }
+
+  &__header {
+    grid-area: 1/2/2/3;
+  }
+
+  &__author {
+    font-size: 0.875rem;
+    line-height: 0.875rem;
+    text-decoration: none;
+    color: $black;
+    font-weight: $bold;
+  }
+
+  &__time {
+    font-size: 0.625rem;
+    line-height: 0.625rem;
+    color: color-mod($black tint(50%));
+    margin-left: 0.25rem;
+  }
+
+  &__body {
+    grid-area: 2/2/3/3;
+    font-size: 0.875rem;
+    line-height: 0.875rem;
+  }
+
+  &__actions {
+    grid-area: 1/3/3/4;
+    display: grid;
+    gap: 5px;
+    font-size: 0.75rem;
+  }
+
+  &__icon {
+    color: color-mod($black tint(50%));
+    cursor: pointer;
+    aspect-ratio: 1/1;
+    width: unset !important;
+    transition: color 250ms ease-out;
+
+    &:hover {
+      color: color-mod($black tint(25%));
+    }
+  }
+
+  &__edit-input {
+    resize: none;
+    background-color: unset;
+    width: 100%;
+    font-size: 0.875rem;
+    font-weight: $normal;
+    line-height: 1rem;
+    box-sizing: border-box;
+    padding: 5px;
+  }
+
+  &__loading {
+    animation: loading 1000ms infinite linear;
+  }
+
+  &__none {
+    font-size: 0.875rem;
+    text-align: center;
+  }
+}

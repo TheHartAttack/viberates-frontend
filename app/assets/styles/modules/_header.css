@@ -1,0 +1,93 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background-color: $black;
+  color: $grey;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  border-bottom: 1px solid color-mod($black tint(25%));
+
+  &__title {
+    padding: 20px;
+    color: $red;
+    font-size: 2rem;
+    line-height: 2.5rem;
+    height: 2.5rem;
+    text-decoration: none;
+    align-self: center;
+    justify-self: flex-start;
+    background-color: $black;
+    user-select: none;
+
+    @media only screen and (min-width: $medium) {
+      font-size: 2.5rem;
+    }
+  }
+
+  &__vibe {
+    font-weight: $bold;
+  }
+
+  &__rates {
+    font-weight: $light;
+  }
+
+  &__bg {
+    background-color: $black;
+  }
+
+  &__search {
+    font-size: 2rem;
+    user-select: none;
+    background-color: $black;
+    border-left: 1px solid color-mod($black tint(25%));
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    aspect-ratio: 1/1;
+    width: $headerHeight;
+    height: calc(2.5rem + 40px);
+    cursor: pointer;
+    transition: background-color 250ms ease-out;
+
+    &:hover {
+      background-color: color-mod($black tint(12.5%));
+    }
+
+    &--active {
+      background-color: color-mod($black tint(12.5%));
+    }
+  }
+
+  &__user {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    aspect-ratio: 1/1;
+    height: calc(2.5rem + 40px);
+    user-select: none;
+    background-color: $black;
+    border-left: 1px solid color-mod($black tint(25%));
+    cursor: pointer;
+
+    &:hover > .menu {
+      top: 100%;
+    }
+  }
+
+  &__user-image {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 100%;
+    overflow: hidden;
+
+    & > img {
+      width: 100%;
+    }
+  }
+}

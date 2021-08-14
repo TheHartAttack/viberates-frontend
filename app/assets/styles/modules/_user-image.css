@@ -1,0 +1,69 @@
+.user-image {
+  background-color: $black;
+  color: $grey;
+  height: 200px;
+  width: 200px;
+  border-radius: 100%;
+  box-sizing: border-box;
+  font-size: 5rem;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid $black;
+
+  & > img {
+    height: 100%;
+    width: 100%;
+  }
+
+  &:hover {
+    .user-image__upload {
+      opacity: 1;
+    }
+  }
+
+  &__upload {
+    position: absolute;
+    background-color: color-mod($black a(87.5%));
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-size: 2rem;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 20px;
+    place-items: center;
+    place-content: center;
+    opacity: 0;
+    transition: opacity 250ms ease-out;
+
+    & > input {
+      height: 1px;
+      width: 1px;
+      opacity: 0;
+      z-index: -999;
+    }
+  }
+
+  &__button {
+    cursor: pointer;
+    color: $red;
+    background: unset;
+    border: none;
+    transition: color 250ms ease-out;
+
+    &:hover {
+      color: color-mod($red shade(50%));
+    }
+  }
+
+  &__loading {
+    position: absolute;
+    background-color: color-mod($black a(87.5%));
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+  }
+}

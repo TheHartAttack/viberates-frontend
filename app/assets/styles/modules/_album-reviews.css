@@ -1,0 +1,85 @@
+.album-reviews {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: flex-start;
+
+  @media only screen and (min-width: $medium) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only screen and (min-width: $large) {
+    grid-column: 3/7;
+  }
+
+  &__column {
+    display: grid;
+    gap: 20px;
+  }
+
+  &__review {
+    background-color: $black;
+    color: $grey;
+    display: grid;
+    grid-template-columns: 1fr 70px;
+    grid-template-rows: auto 35px;
+  }
+
+  &__body {
+    grid-column: 1/2;
+    padding: 20px 20px 10px;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    font-weight: lighter;
+    word-break: break-all;
+  }
+
+  &__rating {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px;
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+
+  &__posted {
+    text-align: center;
+    font-size: 0.625rem;
+    color: color-mod($grey shade(50%));
+    padding: 10px 0;
+    grid-column: 1/2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__author {
+    color: $grey;
+    text-decoration: none;
+  }
+
+  &__date {
+    color: color-mod($grey shade(50%));
+  }
+
+  &__link {
+    text-decoration: none;
+    height: 100%;
+    background-color: $red;
+    color: $grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 250ms ease-out;
+    grid-column: 2/3;
+    font-size: 0.75rem;
+
+    &:hover {
+      background-color: color-mod($red shade(25%));
+    }
+  }
+}

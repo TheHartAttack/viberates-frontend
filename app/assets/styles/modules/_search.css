@@ -1,0 +1,214 @@
+.search {
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: color-mod($black a(0.995));
+  display: grid;
+  align-content: flex-start;
+  justify-items: center;
+  gap: 50px;
+  overflow: auto;
+
+  &__header {
+    background-color: $black;
+    height: $headerHeight;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr $headerHeight;
+
+    @media only screen and (min-width: $medium) {
+      grid-template-columns: $headerHeight 1fr $headerHeight;
+    }
+  }
+
+  &__icon {
+    height: 100%;
+    width: $headerHeight;
+    place-items: center;
+    color: $grey;
+    font-size: 2.5rem;
+    display: none;
+
+    &--search {
+      @media only screen and (min-width: $medium) {
+        display: grid;
+      }
+    }
+  }
+
+  &__close {
+    @extend &__icon;
+    display: grid;
+    color: $red;
+    cursor: pointer;
+    transition: color 250ms ease-out;
+
+    &:hover {
+      color: color-mod($red shade(50%));
+    }
+  }
+
+  &__input {
+    width: 100%;
+    height: $headerHeight;
+    padding: 20px;
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: $bold;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  &__results {
+    display: grid;
+    gap: 40px;
+    width: 100%;
+    max-width: 1440px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  &__section {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr;
+
+    &--albums {
+      @media only screen and (min-width: $smallMedium) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media only screen and (min-width: $medium) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      @media only screen and (min-width: $mediumLarge) {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      @media only screen and (min-width: $large) {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      @media only screen and (min-width: $largeHuge) {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    &--artists {
+      @media only screen and (min-width: $mediumLarge) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media only screen and (min-width: $large) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      @media only screen and (min-width: $largeHuge) {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    &--users {
+      @media only screen and (min-width: $tinySmall) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media only screen and (min-width: $small) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      @media only screen and (min-width: $smallMedium) {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      @media only screen and (min-width: $medium) {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      @media only screen and (min-width: $mediumLarge) {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      @media only screen and (min-width: $large) {
+        grid-template-columns: repeat(7, 1fr);
+      }
+
+      @media only screen and (min-width: $largeHuge) {
+        grid-template-columns: repeat(8, 1fr);
+      }
+    }
+
+    & > .album-tile {
+      border-color: color-mod($grey a(0.125));
+    }
+
+    & > .artist-tile {
+      border: 1px solid color-mod($grey a(0.125));
+    }
+
+    & > .user-tile {
+      border: 1px solid color-mod($grey a(0.125));
+    }
+  }
+
+  &__none {
+    color: $grey;
+  }
+
+  &__title {
+    grid-column: 1/-1;
+    color: $grey;
+    text-transform: uppercase;
+    font-weight: $normal;
+    justify-self: center;
+
+    @media only screen and (min-width: $medium) {
+      justify-self: start;
+    }
+  }
+
+  &__button {
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    aspect-ratio: 1.5/1;
+    text-decoration: none;
+    display: grid;
+    place-items: center;
+    border: 1px solid color-mod($grey a(0.125));
+    box-sizing: border-box;
+
+    &--no-results {
+      grid-column: 1/-1;
+      justify-self: flex-start;
+    }
+
+    &:hover {
+      & > .button {
+        background-color: color-mod($red shade(50%));
+      }
+    }
+  }
+
+  &-enter {
+    opacity: 0;
+
+    &-active {
+      opacity: 1;
+      transition: opacity 205ms ease-out;
+    }
+  }
+
+  &-exit {
+    opacity: 1;
+
+    &-active {
+      opacity: 0;
+      transition: opacity 205ms ease-out;
+    }
+  }
+}

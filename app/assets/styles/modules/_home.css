@@ -1,0 +1,57 @@
+.home {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 50px;
+
+  &--left {
+    grid-column: 1/-1;
+
+    @media only screen and (min-width: $large) {
+      grid-column: 1/4;
+    }
+
+    @media only screen and (min-width: $huge) {
+      grid-column: 1/3;
+    }
+  }
+
+  &--right {
+    grid-column: 1/-1;
+
+    @media only screen and (min-width: $large) {
+      grid-column: 4/7;
+    }
+
+    @media only screen and (min-width: $huge) {
+      grid-column: 3/7;
+    }
+  }
+
+  &__links {
+    list-style: none;
+    display: grid;
+    gap: 5px;
+    grid-column: 1/-1;
+    justify-self: center;
+  }
+
+  &__link {
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: $normal;
+    text-transform: uppercase;
+    background-color: $red;
+    color: $grey;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    justify-content: center;
+    transition: background-color 250ms ease-out;
+
+    &:hover {
+      background-color: color-mod($red shade(25%));
+    }
+  }
+}
