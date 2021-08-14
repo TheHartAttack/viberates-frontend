@@ -116,9 +116,11 @@ function Review() {
           )}
         </div>
 
-        <div className="review__section review__body">
-          <ReactMarkdown children={reviewState.reviewData.review} allowedTypes={["paragraph", "text"]} />
-        </div>
+        {Boolean(reviewState.reviewData.review) && (
+          <div className="review__section review__body">
+            <ReactMarkdown children={reviewState.reviewData.review} allowedTypes={["paragraph", "text"]} />
+          </div>
+        )}
 
         <div className="review__section review__footer">
           <div className="review__summary">{reviewState.reviewData.summary}</div>
