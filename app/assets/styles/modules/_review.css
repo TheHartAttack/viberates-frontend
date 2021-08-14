@@ -101,6 +101,7 @@
     place-items: center;
     background-color: $black;
     color: $grey;
+    aspect-ratio: 1/1;
 
     & > span {
       padding: 20px;
