@@ -80,18 +80,22 @@ function Home(props) {
       <div className="home home--left">
         {appState.loggedIn ? "" : <Register />}
 
-        <div className="home-section home-section--sidebar home-section--reviews">
-          <div className="home-section__header">
-            <h2 className="home-section__title">Recent Reviews</h2>
-            <Link to="/recent-reviews" className="home-section__view-all-link">
-              View all
-            </Link>
-          </div>
+        {state.recentReviews.length && (
+          <>
+            <div className="home-section home-section--sidebar home-section--reviews">
+              <div className="home-section__header">
+                <h2 className="home-section__title">Recent Reviews</h2>
+                <Link to="/recent-reviews" className="home-section__view-all-link">
+                  View all
+                </Link>
+              </div>
 
-          {state.recentReviews.map((review, index) => {
-            return <ReviewTile review={review} key={review._id} />
-          })}
-        </div>
+              {state.recentReviews.map((review, index) => {
+                return <ReviewTile review={review} key={review._id} />
+              })}
+            </div>
+          </>
+        )}
 
         <div className="home-section home-section--sidebar">
           <ul className="home__links">
@@ -116,57 +120,73 @@ function Home(props) {
       </div>
 
       <div className="home home--right">
-        <div className="home-section">
-          <div className="home-section__header">
-            <h2 className="home-section__title">Hot Albums</h2>
-            <Link to="/hot-albums" className="home-section__view-all-link">
-              View all
-            </Link>
-          </div>
+        {Boolean(state.hotAlbums.length) && (
+          <>
+            <div className="home-section">
+              <div className="home-section__header">
+                <h2 className="home-section__title">Hot Albums</h2>
+                <Link to="/hot-albums" className="home-section__view-all-link">
+                  View all
+                </Link>
+              </div>
 
-          {state.hotAlbums.map(album => {
-            return <AlbumTile album={album} key={album._id} />
-          })}
-        </div>
+              {state.hotAlbums.map(album => {
+                return <AlbumTile album={album} key={album._id} />
+              })}
+            </div>
+          </>
+        )}
 
-        <div className="home-section">
-          <div className="home-section__header">
-            <h2 className="home-section__title">Top Rated</h2>
-            <Link to="/top-rated" className="home-section__view-all-link">
-              View all
-            </Link>
-          </div>
+        {Boolean(state.topRated.length) && (
+          <>
+            <div className="home-section">
+              <div className="home-section__header">
+                <h2 className="home-section__title">Top Rated</h2>
+                <Link to="/top-rated" className="home-section__view-all-link">
+                  View all
+                </Link>
+              </div>
 
-          {state.topRated.map(album => {
-            return <AlbumTile album={album} key={album._id} />
-          })}
-        </div>
+              {state.topRated.map(album => {
+                return <AlbumTile album={album} key={album._id} />
+              })}
+            </div>
+          </>
+        )}
 
-        <div className="home-section">
-          <div className="home-section__header">
-            <h2 className="home-section__title">New Releases</h2>
-            <Link to="/new-releases" className="home-section__view-all-link">
-              View all
-            </Link>
-          </div>
+        {Boolean(state.newReleases.length) && (
+          <>
+            <div className="home-section">
+              <div className="home-section__header">
+                <h2 className="home-section__title">New Releases</h2>
+                <Link to="/new-releases" className="home-section__view-all-link">
+                  View all
+                </Link>
+              </div>
 
-          {state.newReleases.map(album => {
-            return <AlbumTile album={album} key={album._id} />
-          })}
-        </div>
+              {state.newReleases.map(album => {
+                return <AlbumTile album={album} key={album._id} />
+              })}
+            </div>
+          </>
+        )}
 
-        <div className="home-section home-section--user">
-          <div className="home-section__header">
-            <h2 className="home-section__title">Top Users</h2>
-            <Link to="/top-users" className="home-section__view-all-link">
-              View all
-            </Link>
-          </div>
+        {Boolean(state.topUsers.length) && (
+          <>
+            <div className="home-section home-section--user">
+              <div className="home-section__header">
+                <h2 className="home-section__title">Top Users</h2>
+                <Link to="/top-users" className="home-section__view-all-link">
+                  View all
+                </Link>
+              </div>
 
-          {state.topUsers.map(user => {
-            return <UserTile user={user} key={user._id} />
-          })}
-        </div>
+              {state.topUsers.map(user => {
+                return <UserTile user={user} key={user._id} />
+              })}
+            </div>
+          </>
+        )}
       </div>
     </Page>
   )
