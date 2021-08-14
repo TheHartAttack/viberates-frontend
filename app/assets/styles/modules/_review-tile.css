@@ -66,6 +66,7 @@
     padding: 20px;
     text-align: center;
     font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 
   &__posted {
