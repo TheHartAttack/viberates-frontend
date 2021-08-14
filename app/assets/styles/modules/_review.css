@@ -21,7 +21,7 @@
   &__title {
     text-transform: uppercase;
     font-size: 1.5rem;
-    height: 1.5rem;
+    line-height: 1.5rem;
   }
 
   &__posted {
@@ -101,7 +101,6 @@
     place-items: center;
     background-color: $black;
     color: $grey;
-    aspect-ratio: 1/1;
 
     & > span {
       padding: 20px;
