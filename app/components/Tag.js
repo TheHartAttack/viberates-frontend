@@ -35,8 +35,6 @@ function Tag() {
         })
         const response = await Axios.post(`/tag/${tag}`, {option: state.option, offset: 0}, {cancelToken: newCancelToken()})
 
-        console.log(response.data)
-
         if (response.data.success) {
           //Format date
           response.data.albums.map(album => {
