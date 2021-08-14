@@ -143,7 +143,7 @@ function Main() {
       <DispatchContext.Provider value={dispatch}>
         <BrowserRouter>
           <Header />
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<Loading className="align-start" />}>
             <Switch>
               <Route path="/" exact>
                 <Home />

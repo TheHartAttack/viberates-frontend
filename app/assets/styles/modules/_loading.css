@@ -49,6 +49,10 @@
     color: $grey;
   }
 
+  &--align-start {
+    align-self: start;
+  }
+
   &--generated {
     height: 3rem;
     padding: 50px;
