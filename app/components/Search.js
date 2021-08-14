@@ -129,7 +129,7 @@ function Search() {
                 return <ArtistTile artist={artist} key={artist._id} />
               })}
             {!Boolean(state.results.artists.length) && <span className="search__none">No results found.</span>}
-            <Link onClick={() => appDispatch({type: "closeSearch"})} to="/add-artist" className={`search__button ${!state.results.artists.length ? "search__button--no-results" : ""}`}>
+            <Link onClick={() => appDispatch({type: "closeSearch"})} to="/add-artist" className="search__button">
               <span className="button">
                 Add artist to database <FontAwesomeIcon icon={faArrowRight} />
               </span>
