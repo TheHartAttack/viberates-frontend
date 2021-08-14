@@ -207,6 +207,7 @@ function User() {
             draft.userData.image = response.data.image
             draft.uploading = false
           })
+          appDispatch({type: "updateImage", value: response.data.image})
         } else {
           throw new Error(response.data.message)
         }

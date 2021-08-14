@@ -19,6 +19,10 @@ function mainReducer(draft, action) {
     case "setSize":
       draft.size = action.value
       return
+    case "updateImage":
+      draft.user.image = action.value
+      localStorage.setItem("albumAppUserImage", action.value)
+      return
   }
 }
 
