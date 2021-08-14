@@ -80,7 +80,7 @@ function Home(props) {
       <div className="home home--left">
         {appState.loggedIn ? "" : <Register />}
 
-        {state.recentReviews.length && (
+        {Boolean(state.recentReviews.length) && (
           <>
             <div className="home-section home-section--sidebar home-section--reviews">
               <div className="home-section__header">
