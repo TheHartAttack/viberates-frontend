@@ -1,16 +1,63 @@
 .login {
-  font-size: 1rem;
-  justify-self: flex-end;
-  margin-right: 40px;
+  font-size: 2rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  aspect-ratio: 1/1;
+  height: calc(2.5rem + 40px);
+  user-select: none;
+  background-color: $black;
+  border-left: 1px solid color-mod($black tint(25%));
+  width: $headerHeight;
+  transition: background-color 250ms ease-out;
 
-  & .form__input {
-    font-weight: $normal;
+  &--active {
+    background-color: color-mod($black tint(12.5%));
+  }
+
+  &__button {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+
+  &__form {
+    padding: 20px;
+    gap: 10px;
+    font-size: 1rem;
+    background-color: $black;
+    position: absolute;
+    top: 100%;
+    color: $grey;
+    white-space: nowrap;
+    transition: all 250ms ease-out;
+    z-index: -1;
+    border-top: 1px solid color-mod($black tint(25%));
+    transform: translateY(-100%);
+
+    &--active {
+      transform: translateY(0);
+    }
+  }
+
+  &__title {
+    font-size: 1rem;
   }
 
   &__forgot {
-    font-size: 0.5rem;
     text-decoration: none;
     color: $grey;
+    font-size: 0.75rem;
     text-align: center;
+    margin-top: 10px;
+    justify-self: center;
+    transition: color 250ms ease-out;
+
+    &:hover {
+      color: color-mod($grey shade(25%));
+    }
   }
 }

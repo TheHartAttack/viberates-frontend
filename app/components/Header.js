@@ -23,12 +23,12 @@ function Header(props) {
 
   return (
     <header className="header">
-      <Link to="/" className="header__title">
-        <span className="header__vibe">VIBE</span>
-        <span className="header__rates">RATES</span>
-      </Link>
-
-      <div className="header__bg"></div>
+      <div className="header__title">
+        <Link to="/" className="header__title-link">
+          <span className="header__vibe">VIBE</span>
+          <span className="header__rates">RATES</span>
+        </Link>
+      </div>
 
       {!props.staticEmpty ? headerContent : ""}
 

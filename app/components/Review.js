@@ -55,7 +55,7 @@ function Review() {
       }
     }
     getReview()
-  }, [])
+  }, [review])
 
   async function handleLike(e) {
     cancelPreviousRequest()

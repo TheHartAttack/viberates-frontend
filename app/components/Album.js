@@ -68,7 +68,7 @@ function Album() {
       }
     }
     getAlbum()
-  }, [])
+  }, [album])
 
   if (state.loading) {
     return (
@@ -81,56 +81,59 @@ function Album() {
   return (
     <Page title={`${state.albumData.artist.name} - ${state.albumData.title}`}>
       <AlbumProfile albumData={state.albumData} artist={artist} album={album} page="album" />
-      <div className="album-reviews">
-        <div className="album-reviews__column">
-          {state.albumData.reviews.map((review, index) => {
-            if (index % state.colNum == 0) {
-              return (
-                <div className="album-reviews__review" key={review._id}>
-                  <div className="album-reviews__body">{review.summary}</div>
 
-                  <span className="album-reviews__rating">{review.rating}</span>
+      {Boolean(state.albumData.reviews.length) && (
+        <div className="album-reviews">
+          <div className="album-reviews__column">
+            {state.albumData.reviews.map((review, index) => {
+              if (index % state.colNum == 0) {
+                return (
+                  <div className="album-reviews__review" key={review._id}>
+                    <div className="album-reviews__body">{review.summary}</div>
 
-                  <span className="album-reviews__posted">
-                    Posted by&nbsp;
-                    <Link to={`/user/${review.author.slug}`} className="album-reviews__author">
-                      {review.author.username}
+                    <span className="album-reviews__rating">{review.rating}</span>
+
+                    <span className="album-reviews__posted">
+                      Posted by&nbsp;
+                      <Link to={`/user/${review.author.slug}`} className="album-reviews__author">
+                        {review.author.username}
+                      </Link>
+                      &nbsp;on&nbsp;<span className="album-reviews__date">{`${review.date.getDate()}/${review.date.getMonth() + 1}/${review.date.getFullYear()}`}</span>
+                    </span>
+                    <Link to={`/music/${artist}/${album}/${review._id}`} className="album-reviews__link">
+                      <FontAwesomeIcon icon={faArrowRight} />
                     </Link>
-                    &nbsp;on&nbsp;<span className="album-reviews__date">{`${review.date.getDate()}/${review.date.getMonth() + 1}/${review.date.getFullYear()}`}</span>
-                  </span>
-                  <Link to={`/music/${artist}/${album}/${review._id}`} className="album-reviews__link">
-                    <FontAwesomeIcon icon={faArrowRight} />
-                  </Link>
-                </div>
-              )
-            }
-          })}
-        </div>
-        <div className="album-reviews__column">
-          {state.albumData.reviews.map((review, index) => {
-            if (index % state.colNum == 1) {
-              return (
-                <div className="album-reviews__review" key={review._id}>
-                  <div className="album-reviews__body">{review.summary}</div>
+                  </div>
+                )
+              }
+            })}
+          </div>
+          <div className="album-reviews__column">
+            {state.albumData.reviews.map((review, index) => {
+              if (index % state.colNum == 1) {
+                return (
+                  <div className="album-reviews__review" key={review._id}>
+                    <div className="album-reviews__body">{review.summary}</div>
 
-                  <span className="album-reviews__rating">{review.rating}</span>
+                    <span className="album-reviews__rating">{review.rating}</span>
 
-                  <span className="album-reviews__posted">
-                    Posted by&nbsp;
-                    <Link to={`/user/${review.author.slug}`} className="album-reviews__author">
-                      {review.author.username}
+                    <span className="album-reviews__posted">
+                      Posted by&nbsp;
+                      <Link to={`/user/${review.author.slug}`} className="album-reviews__author">
+                        {review.author.username}
+                      </Link>
+                      &nbsp;on&nbsp;<span className="album-reviews__date">{`${review.date.getDate()}/${review.date.getMonth() + 1}/${review.date.getFullYear()}`}</span>
+                    </span>
+                    <Link to={`/music/${artist}/${album}/${review._id}`} className="album-reviews__link">
+                      Read
                     </Link>
-                    &nbsp;on&nbsp;<span className="album-reviews__date">{`${review.date.getDate()}/${review.date.getMonth() + 1}/${review.date.getFullYear()}`}</span>
-                  </span>
-                  <Link to={`/music/${artist}/${album}/${review._id}`} className="album-reviews__link">
-                    Read
-                  </Link>
-                </div>
-              )
-            }
-          })}
+                  </div>
+                )
+              }
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </Page>
   )
 }

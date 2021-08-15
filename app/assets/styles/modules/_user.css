@@ -33,15 +33,16 @@
   &__menu {
     background-color: $black;
     position: absolute;
-    top: calc(-100% - 5px);
+    top: 100%;
     color: $grey;
     white-space: nowrap;
-    transition: top 250ms ease-out;
+    transition: all 250ms ease-out;
     z-index: -1;
     border-top: 1px solid color-mod($black tint(25%));
+    transform: translateY(-100%);
 
     &--active {
-      top: 100%;
+      transform: translateY(0);
     }
 
     & > li {

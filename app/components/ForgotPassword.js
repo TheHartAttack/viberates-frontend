@@ -2,6 +2,8 @@ import React, {useEffect, useContext} from "react"
 import {useImmer} from "use-immer"
 import Axios from "axios"
 import useCancelToken from "react-use-cancel-token"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faKey} from "@fortawesome/free-solid-svg-icons"
 
 //Contexts
 import DispatchContext from "../contexts/DispatchContext"
@@ -66,6 +68,8 @@ function ForgotPassword() {
   return (
     <Page title="Forgot Password">
       <form onSubmit={handleSubmit} className="form forgot-password">
+        <h3 className="form__title">Reset Password</h3>
+
         <FormInput
           form="forgot-password"
           type="text"
@@ -79,7 +83,10 @@ function ForgotPassword() {
           }}
         />
 
-        <FormSubmit text="Reset password" disabled={state.submitting} />
+        <FormSubmit disabled={state.submitting}>
+          Reset password
+          <FontAwesomeIcon icon={faKey} />
+        </FormSubmit>
       </form>
     </Page>
   )

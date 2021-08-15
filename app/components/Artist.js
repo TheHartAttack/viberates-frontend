@@ -50,7 +50,7 @@ function Artist() {
       }
     }
     getArtist()
-  }, [])
+  }, [artist])
 
   if (state.loading) {
     return (

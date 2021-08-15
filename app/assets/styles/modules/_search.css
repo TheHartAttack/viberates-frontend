@@ -182,6 +182,10 @@
     border: 1px solid color-mod($grey a(0.125));
     box-sizing: border-box;
 
+    & > span {
+      margin: 20px;
+    }
+
     &:hover {
       & > .button {
         background-color: color-mod($red shade(50%));

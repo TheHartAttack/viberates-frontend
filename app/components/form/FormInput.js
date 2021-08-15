@@ -13,7 +13,7 @@ function FormInput(props) {
         ) : (
           ""
         )}
-        <input onChange={props.onChange} className="form__input" type={props.type} name={props.name} id={`${props.form ? `${props.form}-` : ""}${props.name}`} placeholder={`${props.placeholder ? props.placeholder : ""}`} value={props.value} />
+        <input onChange={props.onChange} onFocus={props.onFocus ? props.onFocus : ""} onBlur={props.onBlur ? props.onBlur : ""} autoComplete="off" className="form__input" type={props.type} name={props.name} id={`${props.form ? `${props.form}-` : ""}${props.name}`} placeholder={`${props.placeholder ? props.placeholder : ""}`} value={props.value} />
       </div>
     )
   }

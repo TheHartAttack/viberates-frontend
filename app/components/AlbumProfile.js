@@ -40,21 +40,23 @@ function AlbumProfile(props) {
 
         {props.albumData.releaseDate && <div className="album-profile__date">{props.albumData.releaseDate.getFullYear()}</div>}
 
-        <div className="album-profile__rating-tags">
-          {Boolean(props.albumData.tags.length) && (
-            <div className="album-profile__tags">
-              {props.albumData.tags.map((tag, index) => {
-                return (
-                  <Link to={`/tag/${tag.slug}`} className="album-profile__tag" key={index}>
-                    {tag.name}
-                  </Link>
-                )
-              })}
-            </div>
-          )}
+        {Boolean(props.albumData.tags.length) && Boolean(props.albumData.rating) && (
+          <div className="album-profile__rating-tags">
+            {Boolean(props.albumData.tags.length) && (
+              <div className="album-profile__tags">
+                {props.albumData.tags.map((tag, index) => {
+                  return (
+                    <Link to={`/tag/${tag.slug}`} className="album-profile__tag" key={index}>
+                      {tag.name}
+                    </Link>
+                  )
+                })}
+              </div>
+            )}
 
-          <span className="album-profile__rating">{props.albumData.rating ? props.albumData.rating : "-"}</span>
-        </div>
+            {Boolean(props.albumData.rating) && <span className="album-profile__rating">{props.albumData.rating ? props.albumData.rating : "-"}</span>}
+          </div>
+        )}
       </div>
 
       {appState.loggedIn && !appState.user.suspended && (
