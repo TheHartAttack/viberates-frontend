@@ -13,7 +13,11 @@ function TopRated() {
   const [state, setState] = useImmer({
     albums: [],
     moreAlbums: false,
-    option: 365,
+    years: [new Date().getFullYear()],
+    decades: [Math.floor(new Date().getFullYear() / 10) * 10],
+    type: "year",
+    yearOption: new Date().getFullYear(),
+    decadeOption: Math.floor(new Date().getFullYear() / 10) * 10,
     loading: true,
     buttonLoading: false
   })
@@ -28,7 +32,9 @@ function TopRated() {
         const response = await Axios.post(
           "/top-rated",
           {
-            option: state.option,
+            type: state.type,
+            yearOption: state.yearOption,
+            decadeOption: state.decadeOption,
             offset: 0
           },
           {cancelToken: newCancelToken()}
@@ -43,6 +49,8 @@ function TopRated() {
           setState(draft => {
             draft.albums = response.data.albums
             draft.moreAlbums = response.data.moreAlbums
+            draft.years = response.data.years
+            draft.decades = response.data.decades
             draft.loading = false
           })
         } else {
@@ -61,7 +69,7 @@ function TopRated() {
       }
     }
     getTopRated()
-  }, [state.option])
+  }, [state.type, state.yearOption, state.decadeOption])
 
   async function loadMore() {
     cancelPreviousRequest()
@@ -69,7 +77,16 @@ function TopRated() {
       setState(draft => {
         draft.buttonLoading = true
       })
-      const response = await Axios.post("/top-rated", {option: state.option, offset: state.albums.length}, {cancelToken: newCancelToken()})
+      const response = await Axios.post(
+        "/top-rated",
+        {
+          type: state.type,
+          yearOption: state.yearOption,
+          decadeOption: state.decadeOption,
+          offset: state.albums.length
+        },
+        {cancelToken: newCancelToken()}
+      )
 
       if (response.data.success) {
         setState(draft => {
@@ -98,19 +115,60 @@ function TopRated() {
       <div className="top-rated">
         <div className="top-rated__header">
           <h2 className="top-rated__title">Top Rated</h2>
+
           <select
             className="top-rated__select"
-            defaultValue="365"
+            defaultValue="year"
             onChange={e => {
               setState(draft => {
-                draft.option = Number(e.target.value)
+                draft.type = e.target.value
               })
             }}
           >
-            <option value="365">1 year</option>
-            <option value="3650">10 years</option>
-            <option value="-1">All time</option>
+            <option value="year">Year</option>
+            <option value="decade">Decade</option>
+            <option value="all">All Time</option>
           </select>
+
+          {state.type == "year" && (
+            <select
+              className="top-rated__year"
+              value={state.yearOption}
+              onChange={e => {
+                setState(draft => {
+                  draft.yearOption = e.target.value
+                })
+              }}
+            >
+              {state.years.map((year, index) => {
+                return (
+                  <option key={index} value={year}>
+                    {year}
+                  </option>
+                )
+              })}
+            </select>
+          )}
+
+          {state.type == "decade" && (
+            <select
+              className="top-rated__decade"
+              value={state.decadeOption}
+              onChange={e => {
+                setState(draft => {
+                  draft.decadeOption = e.target.value
+                })
+              }}
+            >
+              {state.decades.map((decade, index) => {
+                return (
+                  <option key={index} value={decade}>
+                    {decade}s
+                  </option>
+                )
+              })}
+            </select>
+          )}
         </div>
 
         {state.loading && <Loading />}

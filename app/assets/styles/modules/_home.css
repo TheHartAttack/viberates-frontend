@@ -51,7 +51,7 @@
     transition: background-color 250ms ease-out;
 
     &:hover {
-      background-color: color-mod($red shade(25%));
+      background-color: color-mod($red shade(50%));
     }
   }
 }
