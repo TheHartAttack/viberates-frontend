@@ -47,17 +47,17 @@ import FlashMessages from "./components/FlashMessages"
 
 function Main() {
   const initialState = {
-    loggedIn: Boolean(localStorage.getItem("albumAppToken")),
+    loggedIn: Boolean(localStorage.getItem("viberatesToken")),
     flashMessages: [],
     user: {
-      token: localStorage.getItem("albumAppToken"),
-      _id: localStorage.getItem("albumAppUserId"),
-      username: localStorage.getItem("albumAppUsername"),
-      slug: localStorage.getItem("albumAppUserSlug"),
-      email: localStorage.getItem("albumAppUserEmail"),
-      type: JSON.parse(localStorage.getItem("albumAppUserType")),
-      suspended: JSON.parse(localStorage.getItem("albumAppUserSuspended")),
-      image: localStorage.getItem("albumAppUserImage")
+      token: localStorage.getItem("viberatesToken"),
+      _id: localStorage.getItem("viberatesUserId"),
+      username: localStorage.getItem("viberatesUsername"),
+      slug: localStorage.getItem("viberatesUserSlug"),
+      email: localStorage.getItem("viberatesUserEmail"),
+      type: JSON.parse(localStorage.getItem("viberatesUserType")),
+      suspended: JSON.parse(localStorage.getItem("viberatesUserSuspended")),
+      image: localStorage.getItem("viberatesUserImage")
     },
     searchOpen: false,
     size: "small"
@@ -97,23 +97,23 @@ function Main() {
 
   useEffect(() => {
     if (state.loggedIn) {
-      localStorage.setItem("albumAppToken", state.user.token)
-      localStorage.setItem("albumAppUsername", state.user.username)
-      localStorage.setItem("albumAppUserSlug", state.user.slug)
-      localStorage.setItem("albumAppUserEmail", state.user.email)
-      localStorage.setItem("albumAppUserId", state.user._id)
-      localStorage.setItem("albumAppUserImage", state.user.image)
-      localStorage.setItem("albumAppUserType", JSON.stringify(state.user.type))
-      localStorage.setItem("albumAppUserSuspended", JSON.stringify(state.user.suspended))
+      localStorage.setItem("viberatesToken", state.user.token)
+      localStorage.setItem("viberatesUsername", state.user.username)
+      localStorage.setItem("viberatesUserSlug", state.user.slug)
+      localStorage.setItem("viberatesUserEmail", state.user.email)
+      localStorage.setItem("viberatesUserId", state.user._id)
+      localStorage.setItem("viberatesUserImage", state.user.image)
+      localStorage.setItem("viberatesUserType", JSON.stringify(state.user.type))
+      localStorage.setItem("viberatesUserSuspended", JSON.stringify(state.user.suspended))
     } else {
-      localStorage.removeItem("albumAppToken")
-      localStorage.removeItem("albumAppUsername")
-      localStorage.removeItem("albumAppUserSlug")
-      localStorage.removeItem("albumAppUserEmail")
-      localStorage.removeItem("albumAppUserId")
-      localStorage.removeItem("albumAppUserType")
-      localStorage.removeItem("albumAppUserSuspended")
-      localStorage.removeItem("albumAppUserImage")
+      localStorage.removeItem("viberatesToken")
+      localStorage.removeItem("viberatesUsername")
+      localStorage.removeItem("viberatesUserSlug")
+      localStorage.removeItem("viberatesUserEmail")
+      localStorage.removeItem("viberatesUserId")
+      localStorage.removeItem("viberatesUserType")
+      localStorage.removeItem("viberatesUserSuspended")
+      localStorage.removeItem("viberatesUserImage")
     }
   }, [state.loggedIn])
 

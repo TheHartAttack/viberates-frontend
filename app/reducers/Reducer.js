@@ -21,7 +21,7 @@ function mainReducer(draft, action) {
       return
     case "updateImage":
       draft.user.image = action.value
-      localStorage.setItem("albumAppUserImage", action.value)
+      localStorage.setItem("viberatesUserImage", action.value)
       return
   }
 }
