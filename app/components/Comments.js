@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useRef} from "react"
+import React, {useEffect, useContext} from "react"
 import {Link, useParams} from "react-router-dom"
 import Axios from "axios"
 import useCancelToken from "react-use-cancel-token"
@@ -23,7 +23,6 @@ function Comments() {
   const appDispatch = useContext(DispatchContext)
   const reviewState = useContext(ReviewStateContext)
   const reviewDispatch = useContext(ReviewDispatchContext)
-  const commentInput = useRef(null)
   const {review} = useParams()
   const {newCancelToken, cancelPreviousRequest, isCancel} = useCancelToken()
   const [state, setState] = useImmer({
@@ -60,7 +59,6 @@ function Comments() {
               draft.submitting = false
               draft.commentBody = ""
             })
-            commentInput.current.value = ""
           } else {
             throw new Error(response.data.message)
           }
@@ -190,8 +188,8 @@ function Comments() {
       >
         <TextAreaAutosize
           className="comments__input"
-          ref={commentInput}
           placeholder="Add a comment..."
+          value={state.commentBody}
           onChange={e => {
             setState(draft => {
               draft.commentBody = e.target.value
