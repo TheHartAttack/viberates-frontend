@@ -39,7 +39,7 @@ function FormInput(props) {
             {props.label}
           </label>
         )}
-        <TextAreaAutosize onChange={props.onChange} className={`form__input form__textarea ${props.className ? `form__textarea--${props.className}` : ""}`} name={props.name} id={`${props.form ? `${props.form}-` : ""}${props.name}`} placeholder={props.placeholder ? props.placeholder : ""} value={props.value ? props.value : undefined} />
+        <TextAreaAutosize onChange={props.onChange} className={`form__input form__textarea ${props.className ? `form__textarea--${props.className}` : ""}`} name={props.name} id={`${props.form ? `${props.form}-` : ""}${props.name}`} placeholder={props.placeholder ? props.placeholder : ""} value={props.value ? props.value : ""} />
       </div>
     )
   }
