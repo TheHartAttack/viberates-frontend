@@ -52,6 +52,7 @@ function Contact() {
             })
             appDispatch({type: "flashMessage", value: response.data.message})
           } else {
+            console.log(response.data.message)
             throw new Error(response.data.message)
           }
         } catch (e) {
