@@ -8,6 +8,7 @@ import {faArrowRight} from "@fortawesome/free-solid-svg-icons"
 
 //Contexts
 import StateContext from "../contexts/StateContext"
+import DispatchContext from "../contexts/DispatchContext"
 
 //Components
 import Loading from "./Loading"
@@ -19,6 +20,7 @@ import UserTile from "./UserTile"
 
 function Home(props) {
   const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
   const {newCancelToken, cancelPreviousRequest, isCancel} = useCancelToken()
   const [state, setState] = useImmer({
     recentReviews: [],
