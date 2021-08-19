@@ -25,8 +25,10 @@ function Header(props) {
     <header className="header">
       <div className="header__title">
         <Link to="/" className="header__title-link">
-          <span className="header__vibe">VIBE</span>
-          <span className="header__rates">RATES</span>
+          <span>
+            <span className="header__vibe">VIBE</span>
+            <span className="header__rates">RATES</span>
+          </span>
         </Link>
       </div>
 

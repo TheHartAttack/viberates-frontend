@@ -339,7 +339,7 @@ function User() {
               </li>
             )}
 
-            {appState.user.type.includes("admin") && (
+            {appState.user.type.includes("admin") && !state.userData.type.includes("admin") && appState.user._id != state.userData._id && (
               <li className="user-profile__link">
                 <button onClick={handleMod} className="user-profile__button button" disabled={state.handlingMod ? "disabled" : ""}>
                   {state.handlingMod ? <Loading fontSize="12" firstCol={true} /> : state.userData.type.includes("mod") ? "Demote from mod" : "Promote to mod"} <FontAwesomeIcon icon={state.userData.type.includes("mod") ? faArrowDown : faArrowUp} />
