@@ -169,4 +169,11 @@
       background-color: color-mod($black tint(25%));
     }
   }
+
+  &__button {
+    @extend &__link;
+    border: none;
+    cursor: pointer;
+    font-weight: $normal;
+  }
 }

@@ -4,7 +4,7 @@ import useCancelToken from "react-use-cancel-token"
 import {withRouter, Redirect, useParams, Link} from "react-router-dom"
 import {useImmer} from "use-immer"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faTimes, faSave} from "@fortawesome/free-solid-svg-icons"
+import {faTimes, faSave, faTrash} from "@fortawesome/free-solid-svg-icons"
 
 //Contexts
 import StateContext from "../contexts/StateContext"
@@ -25,6 +25,7 @@ function EditAlbum(props) {
   const {newCancelToken, cancelPreviousRequest, isCancel} = useCancelToken()
   const [state, setState] = useImmer({
     artistData: {},
+    id: "",
     title: "",
     image: "",
     preview: "",
@@ -32,6 +33,8 @@ function EditAlbum(props) {
     type: "Studio",
     submitting: false,
     submitCount: 0,
+    deleting: false,
+    deleteCount: 0,
     loading: true
   })
 
@@ -45,6 +48,7 @@ function EditAlbum(props) {
         if (response.data.success) {
           setState(draft => {
             draft.artistData = response.data.album.artist
+            draft.id = response.data.album._id
             draft.title = response.data.album.title
             draft.releaseDate = new Date(response.data.album.releaseDate)
             draft.type = response.data.album.type
@@ -121,10 +125,54 @@ function EditAlbum(props) {
     }
   }, [state.submitCount])
 
+  useEffect(() => {
+    if (state.deleteCount) {
+      async function deleteAlbum() {
+        cancelPreviousRequest()
+
+        setState(draft => {
+          draft.deleting = true
+        })
+
+        try {
+          const response = await Axios.post(`/deleteAlbum`, {albumId: state.id, albumTitle: state.title}, {cancelToken: newCancelToken(), headers: {authorization: appState.user.token}})
+
+          if (response.data.success) {
+            appDispatch({type: "flashMessage", value: response.data.message})
+            setState(draft => {
+              draft.deleting = false
+            })
+            props.history.push(`/music/${artist}`)
+          } else {
+            throw new Error(response.data.message)
+          }
+        } catch (e) {
+          if (isCancel(e)) {
+            console.log(e)
+            return
+          }
+          appDispatch({type: "flashMessage", value: e.message, warning: true})
+          setState(draft => {
+            draft.deleting = false
+          })
+          console.log(e)
+        }
+      }
+      deleteAlbum()
+    }
+  }, [state.deleteCount])
+
   function handleSubmit(e) {
     e.preventDefault()
     setState(draft => {
       draft.submitCount++
+    })
+  }
+
+  function handleDelete(e) {
+    e.preventDefault()
+    setState(draft => {
+      draft.deleteCount++
     })
   }
 
@@ -197,6 +245,14 @@ function EditAlbum(props) {
             Save changes <FontAwesomeIcon icon={faSave} />
           </FormSubmit>
         </div>
+
+        {(appState.user.type.includes("admin") || appState.user.type.includes("mod")) && (
+          <div className="form__buttons">
+            <button onClick={handleDelete} type="button" className="button" disabled={state.deleting}>
+              Delete album <FontAwesomeIcon icon={faTrash} />
+            </button>
+          </div>
+        )}
       </form>
     </Page>
   )
