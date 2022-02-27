@@ -8,6 +8,7 @@ import {faArrowRight} from "@fortawesome/free-solid-svg-icons"
 
 //Contexts
 import StateContext from "../contexts/StateContext"
+import DispatchContext from "../contexts/DispatchContext"
 
 //Components
 import Page from "./Page"
@@ -16,6 +17,7 @@ import AlbumProfile from "./AlbumProfile"
 
 function Album() {
   const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
   const {artist, album} = useParams()
   const {newCancelToken, cancelPreviousRequest, isCancel} = useCancelToken()
   const [state, setState] = useImmer({
