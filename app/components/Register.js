@@ -1,5 +1,4 @@
 import React, {useEffect, useContext} from "react"
-import DispatchContext from "../contexts/DispatchContext"
 import Axios from "axios"
 import useCancelToken from "react-use-cancel-token"
 import {useImmerReducer} from "use-immer"
@@ -7,8 +6,11 @@ import {CSSTransition} from "react-transition-group"
 
 //Components
 import Loading from "./Loading"
+import StateContext from "../contexts/StateContext"
+import DispatchContext from "../contexts/DispatchContext"
 
 function Register() {
+  const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   const {newCancelToken, cancelPreviousRequest, isCancel} = useCancelToken()
   const initialState = {
@@ -276,7 +278,7 @@ function Register() {
 
       <div className="form__group">
         <button className="form__submit button" type="submit" disabled={state.submitting}>
-          {state.submitting ? <Loading fontSize={16} /> : "Sign up for UntitledApp"}
+          {state.submitting ? <Loading fontSize={16} /> : `Sign up for ${appState.siteName}`}
         </button>
       </div>
     </form>

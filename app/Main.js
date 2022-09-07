@@ -47,6 +47,7 @@ import FlashMessages from "./components/FlashMessages"
 
 function Main() {
   const initialState = {
+    siteName: "VibeRates",
     loggedIn: Boolean(localStorage.getItem("viberatesToken")),
     flashMessages: [],
     user: {
