@@ -23,19 +23,25 @@ function Header(props) {
 
   return (
     <header className="header">
-      <div className="header__title">
-        <Link to="/" className="header__title-link">
-          <span>
-            <span className="header__vibe">VIBE</span>
-            <span className="header__rates">RATES</span>
-          </span>
-        </Link>
-      </div>
+      <div className="header__container">
+        <div className="header__title">
+          <Link to="/" className="header__title-link">
+            <span>
+              <span className="header__vibe">
+                V<span class="header__ibe">IBE</span>
+              </span>
+              <span className="header__rates">
+                R<span class="header__ates">ATES</span>
+              </span>
+            </span>
+          </Link>
+        </div>
 
-      {!props.staticEmpty ? headerContent : ""}
+        {!props.staticEmpty ? headerContent : ""}
 
-      <div className="header__search" onClick={handleSearchIcon}>
-        <FontAwesomeIcon icon={faSearch} />
+        <div className="header__search" onClick={handleSearchIcon}>
+          <FontAwesomeIcon icon={faSearch} />
+        </div>
       </div>
     </header>
   )
