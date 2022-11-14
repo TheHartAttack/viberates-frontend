@@ -1,4 +1,5 @@
 .header {
+  $contWidth: 1540px;
   position: sticky;
   top: 0;
   z-index: 9;
@@ -9,15 +10,10 @@
   &__container {
     width: 100%;
     margin: 0 auto;
-    max-width: 1540px;
+    max-width: $contWidth;
     display: grid;
     grid-template-columns: 1fr auto auto;
     box-sizing: border-box;
-    padding-left: 20px;
-
-    @media only screen and (min-width: $medium) {
-      padding-left: 50px;
-    }
   }
 
   &__title {
@@ -27,10 +23,12 @@
     background-color: $black;
     user-select: none;
     display: grid;
+    padding-left: clamp(0px, calc(($contWidth - 100vw) / 2), 20px);
 
     @media only screen and (min-width: $medium) {
       font-size: 2.5rem;
       line-height: 2.5rem;
+      padding-left: clamp(0px, calc(($contWidth - 100vw) / 2), 50px);
     }
   }
 
