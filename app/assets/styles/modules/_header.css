@@ -1,5 +1,4 @@
 .header {
-  $contWidth: 1440px;
   position: sticky;
   top: 0;
   z-index: 9;
@@ -10,7 +9,7 @@
   &__container {
     width: 100%;
     margin: 0 auto;
-    max-width: $contWidth;
+    max-width: $containerWidth;
     display: grid;
     grid-template-columns: 1fr auto auto;
     box-sizing: border-box;
@@ -23,12 +22,12 @@
     background-color: $black;
     user-select: none;
     display: grid;
-    padding-left: clamp(0px, calc(($contWidth + 100px - 100vw) / 2), 20px);
+    padding-left: clamp(0px, calc(($containerWidth + 100px - 100vw) / 2), 20px);
 
     @media only screen and (min-width: $medium) {
       font-size: 2.5rem;
       line-height: 2.5rem;
-      padding-left: clamp(0px, calc(($contWidth + 100px - 100vw) / 2), 50px);
+      padding-left: clamp(0px, calc(($containerWidth + 100px - 100vw) / 2), 50px);
     }
   }
 
