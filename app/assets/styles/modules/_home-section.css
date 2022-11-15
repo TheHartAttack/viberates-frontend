@@ -1,12 +1,12 @@
 .home-section {
   grid-column: 1/5;
   display: grid;
-  grid-gap: 10px;
+  grid-gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   align-items: flex-start;
 
   &--sidebar {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
 
   &--gap-40 {

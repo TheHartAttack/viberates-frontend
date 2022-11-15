@@ -1,10 +1,11 @@
 .container {
   max-width: calc($containerWidth + 100px);
+  min-height: calc(100vh - $headerHeight - 64px);
   width: 100%;
   margin: 0 auto;
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(12, 1fr);
   gap: 50px;
   align-content: flex-start;
   align-items: flex-start;

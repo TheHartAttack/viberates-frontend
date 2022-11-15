@@ -7,11 +7,11 @@
     grid-column: 1/-1;
 
     @media only screen and (min-width: $large) {
-      grid-column: 1/4;
+      grid-column: 1/5;
     }
 
-    @media only screen and (min-width: $huge) {
-      grid-column: 1/3;
+    @media only screen and (min-width: $full) {
+      grid-column: 1/4;
     }
   }
 
@@ -19,11 +19,11 @@
     grid-column: 1/-1;
 
     @media only screen and (min-width: $large) {
-      grid-column: 4/7;
+      grid-column: 5/13;
     }
 
-    @media only screen and (min-width: $huge) {
-      grid-column: 3/7;
+    @media only screen and (min-width: $full) {
+      grid-column: 4/13;
     }
   }
 

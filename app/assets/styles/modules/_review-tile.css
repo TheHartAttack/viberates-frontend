@@ -2,14 +2,25 @@
   background-color: $black;
   color: $grey;
   display: grid;
-  grid-template-columns: 90px 1fr 90px;
-  grid-template-rows: 90px auto 45px;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 2fr auto auto 1fr;
+  align-self: stretch;
+
+  @media only screen and (min-width: $small) {
+    grid-template-columns: 90px 1fr 90px;
+    grid-template-rows: 90px auto 45px;
+  }
 
   &__image {
     width: 100%;
     box-sizing: border-box;
     border-right: 1px solid color-mod($black tint(6.25%));
     border-bottom: 1px solid color-mod($black tint(6.25%));
+    grid-area: 1/1/2/5;
+
+    @media only screen and (min-width: $small) {
+      grid-area: 1/1/2/2;
+    }
   }
 
   &__info {
@@ -17,10 +28,15 @@
     display: grid;
     place-items: center;
     align-content: center;
-    padding: 10px;
+    padding: 20px 10px;
     gap: 10px;
     box-sizing: border-box;
     border-bottom: 1px solid color-mod($black tint(6.25%));
+    grid-area: 2/1/3/7;
+
+    @media only screen and (min-width: $small) {
+      grid-area: 1/2/2/3;
+    }
   }
 
   &__title {
@@ -59,14 +75,23 @@
     font-size: 1.5rem;
     font-weight: 900;
     background-color: color-mod($black tint(6.25%));
+    grid-area: 1/5/2/7;
+
+    @media only screen and (min-width: $small) {
+      grid-area: 1/3/2/4;
+    }
   }
 
   &__body {
-    grid-column: 1/4;
+    grid-column: 1/-1;
     padding: 20px;
     text-align: center;
     font-size: 0.875rem;
     line-height: 1.25rem;
+
+    @media only screen and (min-width: $small) {
+      grid-column: 1/4;
+    }
   }
 
   &__posted {
@@ -74,13 +99,17 @@
     font-size: 0.625rem;
     color: color-mod($grey shade(50%));
     padding: 10px 0;
-    grid-column: 1/3;
+    grid-column: 1/5;
     align-self: center;
     border-top: 1px solid color-mod($black tint(6.25%));
     height: 100%;
     box-sizing: border-box;
     display: grid;
     place-items: center;
+
+    @media only screen and (min-width: $small) {
+      grid-column: 1/3;
+    }
   }
 
   &__author {
@@ -100,11 +129,15 @@
     place-items: center;
     cursor: pointer;
     transition: background-color 250ms ease-out;
-    grid-column: 3/4;
+    grid-column: 5/7;
     text-decoration: none;
 
     &:hover {
       background-color: color-mod($red shade(50%));
+    }
+
+    @media only screen and (min-width: $small) {
+      grid-column: 3/4;
     }
   }
 }

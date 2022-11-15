@@ -1,3 +1,11 @@
 .register {
   grid-column: 1/5;
+
+  @media only screen and (min-width: $medium) {
+    grid-column: 2/4;
+  }
+
+  @media only screen and (min-width: $large) {
+    grid-column: 1/5;
+  }
 }

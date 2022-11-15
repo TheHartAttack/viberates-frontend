@@ -5,12 +5,17 @@
   gap: 20px;
   align-items: flex-start;
 
-  @media only screen and (min-width: $medium) {
+  @media only screen and (min-width: $smallMedium) {
     grid-template-columns: repeat(2, 1fr);
   }
 
   @media only screen and (min-width: $large) {
-    grid-column: 3/7;
+    grid-column: 5/13;
+  }
+
+  @media only screen and (min-width: $huge) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-column: 4/13;
   }
 
   &__column {

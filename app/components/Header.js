@@ -28,10 +28,10 @@ function Header(props) {
           <Link to="/" className="header__title-link">
             <span>
               <span className="header__vibe">
-                V<span class="header__ibe">IBE</span>
+                V<span className="header__ibe">IBE</span>
               </span>
               <span className="header__rates">
-                R<span class="header__ates">ATES</span>
+                R<span className="header__ates">ATES</span>
               </span>
             </span>
           </Link>

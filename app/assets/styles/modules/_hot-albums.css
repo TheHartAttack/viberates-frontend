@@ -4,7 +4,7 @@
 .top-users,
 .recent-reviews,
 .tag {
-  grid-column: 1/7;
+  grid-column: 1/13;
   display: grid;
   gap: 20px;
 

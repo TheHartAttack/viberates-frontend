@@ -4,7 +4,11 @@
   gap: 40px;
 
   @media only screen and (min-width: $large) {
-    grid-column: 3/7;
+    grid-column: 5/13;
+  }
+
+  @media only screen and (min-width: $hugeFull) {
+    grid-column: 4/13;
   }
 
   &__section {
@@ -15,6 +19,10 @@
 
     @media only screen and (min-width: $large) {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media only screen and (min-width: $hugeFull) {
+      grid-template-columns: repeat(3, 1fr);
     }
 
     &:last-of-type {
@@ -79,7 +87,7 @@
   }
 
   &__rating {
-    margin-top: 20px;
+    margin-top: 10px;
     background-color: #f33;
     font-size: 1.25rem;
     font-weight: 900;

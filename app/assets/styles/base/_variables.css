@@ -19,6 +19,8 @@ $mediumLarge: 900px;
 $large: 1080px;
 $largeHuge: 1260px;
 $huge: 1440px;
+$hugeFull: 1620px;
+$full: 1800px;
 
 /*Misc*/
 $headerHeight: calc(2.5rem + 40px);

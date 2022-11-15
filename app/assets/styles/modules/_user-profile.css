@@ -1,5 +1,5 @@
 .user-profile {
-  grid-column: 1/7;
+  grid-column: 1/-1;
   display: grid;
   gap: 20px;
   grid-template-columns: 1fr;
@@ -8,6 +8,18 @@
   @media only screen and (min-width: $medium) {
     grid-template-columns: repeat(3, 1fr);
     gap: 50px;
+  }
+
+  @media only screen and (min-width: $large) {
+    grid-column: 2/12;
+  }
+
+  @media only screen and (min-width: $huge) {
+    grid-column: 3/11;
+  }
+
+  @media only screen and (min-width: $full) {
+    grid-column: 4/10;
   }
 
   &__info {

@@ -1,5 +1,5 @@
 .user-reviews {
-  grid-column: 1/7;
+  grid-column: 1/13;
   display: grid;
   gap: 20px;
   grid-template-columns: 1fr;
@@ -13,9 +13,14 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
+  @media only screen and (min-width: $huge) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
   &__column {
     display: grid;
     gap: 20px;
+    align-self: stretch;
   }
 
   &__load {

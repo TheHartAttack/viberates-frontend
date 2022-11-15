@@ -99,26 +99,28 @@ function Home(props) {
           </>
         )}
 
-        <div className="home-section home-section--sidebar">
-          <ul className="home__links">
-            {appState.loggedIn && (
-              <li>
-                <Link to="/add-artist" className="home__link">
-                  Add artist to database
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </Link>
-              </li>
-            )}
-            {appState.loggedIn && (
-              <li>
-                <Link to="/contact" className="home__link">
-                  Contact admin
-                  <FontAwesomeIcon icon={faArrowRight} />
-                </Link>
-              </li>
-            )}
-          </ul>
-        </div>
+        {appState.loggedIn && (
+          <div className="home-section home-section--sidebar">
+            <ul className="home__links">
+              {appState.loggedIn && (
+                <li>
+                  <Link to="/add-artist" className="home__link">
+                    Add artist to database
+                    <FontAwesomeIcon icon={faArrowRight} />
+                  </Link>
+                </li>
+              )}
+              {appState.loggedIn && (
+                <li>
+                  <Link to="/contact" className="home__link">
+                    Contact admin
+                    <FontAwesomeIcon icon={faArrowRight} />
+                  </Link>
+                </li>
+              )}
+            </ul>
+          </div>
+        )}
       </div>
 
       <div className="home home--right">

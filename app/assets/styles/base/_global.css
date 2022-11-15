@@ -3,6 +3,7 @@
   font-size: 16px;
   font-weight: 600;
   font-family: "Futura";
+  line-height: 1.25;
 }
 
 body {
@@ -23,7 +24,6 @@ h6 {
 }
 
 p {
-  line-height: 1.25rem;
   margin: 0 0 1rem;
 
   &:last-of-type {

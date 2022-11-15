@@ -6,6 +6,7 @@ import {CSSTransition} from "react-transition-group"
 import _ from "lodash"
 import Axios from "axios"
 Axios.defaults.baseURL = process.env.BACKENDURL || "https://viberates.onrender.com"
+Axios.defaults.baseURL = "https://viberates.onrender.com"
 
 //Stylesheet
 import "./assets/styles/styles.css"
