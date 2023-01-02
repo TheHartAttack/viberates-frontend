@@ -4,6 +4,9 @@
   justify-self: center;
   align-self: center;
   font-size: 3rem;
+  line-height: 3rem;
+  height: 3rem;
+  width: 3rem;
   animation: loading 1000ms infinite linear;
 
   &--12 {
