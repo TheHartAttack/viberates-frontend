@@ -161,6 +161,9 @@ function AddArtist(props) {
           <FormSubmit className="add-artist__submit" icon={faSave} submitting={state.submitting} disabled={!state.name}>
             <span>Save</span>
           </FormSubmit>
+          <FormSubmit className="add-artist__submit" icon={faSave} submitting={true} disabled={!state.name}>
+            <span>Save</span>
+          </FormSubmit>
         </div>
       </form>
     </Page>
