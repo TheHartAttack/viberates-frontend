@@ -63,138 +63,136 @@ function Artist(props) {
     <Page title={artistState.artistData.name}>
       <ArtistProfileContext artistData={artistState.artistData} artist={artist} page="artist" />
 
-      <div className="artist__content">
-        <div className="artist-albums">
-          {!artistState.artistData.albums.length && <span>No albums in database.</span>}
+      <div className="artist-albums">
+        {!artistState.artistData.albums.length && <span>No albums in database.</span>}
 
-          {Boolean(
-            artistState.artistData.albums.filter(album => {
-              return album.type == "Studio"
-            }).length
-          ) && (
-            <div className="artist-albums__section">
-              <h3 className="artist-albums__section-title">Studio Albums</h3>
-              {artistState.artistData.albums
-                ? artistState.artistData.albums.map(album => {
-                    if (album.type == "Studio") {
-                      return (
-                        <Link to={`/music/${artistState.artistData.slug}/${album.slug}`} className="artist-albums__album" key={album._id}>
-                          {Boolean(album.image) ? (
-                            <img className="artist-albums__image" src={album.image} />
-                          ) : (
-                            <div className="artist-albums__no-image">
-                              <FontAwesomeIcon icon={faImage} />
-                            </div>
-                          )}
-                          <div className="artist-albums__info">
-                            <span className="artist-albums__title">{album.title}</span>
-                            <span className="artist-albums__date">{new Date(album.releaseDate).getFullYear()}</span>
-                            <span className="artist-albums__rating">{album.rating ? album.rating : "-"}</span>
+        {Boolean(
+          artistState.artistData.albums.filter(album => {
+            return album.type == "Studio"
+          }).length
+        ) && (
+          <div className="artist-albums__section">
+            <h3 className="artist-albums__section-title">Studio Albums</h3>
+            {artistState.artistData.albums
+              ? artistState.artistData.albums.map(album => {
+                  if (album.type == "Studio") {
+                    return (
+                      <Link to={`/music/${artistState.artistData.slug}/${album.slug}`} className="artist-albums__album" key={album._id}>
+                        {Boolean(album.image) ? (
+                          <img className="artist-albums__image" src={album.image} />
+                        ) : (
+                          <div className="artist-albums__no-image">
+                            <FontAwesomeIcon icon={faImage} />
                           </div>
-                        </Link>
-                      )
-                    }
-                  })
-                : ""}
-            </div>
-          )}
+                        )}
+                        <div className="artist-albums__info">
+                          <span className="artist-albums__title">{album.title}</span>
+                          <span className="artist-albums__date">{new Date(album.releaseDate).getFullYear()}</span>
+                          <span className="artist-albums__rating">{album.rating ? album.rating : "-"}</span>
+                        </div>
+                      </Link>
+                    )
+                  }
+                })
+              : ""}
+          </div>
+        )}
 
-          {Boolean(
-            artistState.artistData.albums.filter(album => {
-              return album.type == "EP"
-            }).length
-          ) && (
-            <div className="artist-albums__section">
-              <h3 className="artist-albums__section-title">EP</h3>
-              {artistState.artistData.albums
-                ? artistState.artistData.albums.map(album => {
-                    if (album.type == "EP") {
-                      return (
-                        <Link to={`/music/${artistState.artistData.slug}/${album.slug}`} className="artist-albums__album" key={album._id}>
-                          {Boolean(album.image) ? (
-                            <img className="artist-albums__image" src={album.image} />
-                          ) : (
-                            <div className="artist-albums__no-image">
-                              <FontAwesomeIcon icon={faImage} />
-                            </div>
-                          )}
-                          <div className="artist-albums__info">
-                            <span className="artist-albums__title">{album.title}</span>
-                            <span className="artist-albums__date">{new Date(album.releaseDate).getFullYear()}</span>
-                            <span className="artist-albums__rating">{album.rating ? album.rating : "-"}</span>
+        {Boolean(
+          artistState.artistData.albums.filter(album => {
+            return album.type == "EP"
+          }).length
+        ) && (
+          <div className="artist-albums__section">
+            <h3 className="artist-albums__section-title">EP</h3>
+            {artistState.artistData.albums
+              ? artistState.artistData.albums.map(album => {
+                  if (album.type == "EP") {
+                    return (
+                      <Link to={`/music/${artistState.artistData.slug}/${album.slug}`} className="artist-albums__album" key={album._id}>
+                        {Boolean(album.image) ? (
+                          <img className="artist-albums__image" src={album.image} />
+                        ) : (
+                          <div className="artist-albums__no-image">
+                            <FontAwesomeIcon icon={faImage} />
                           </div>
-                        </Link>
-                      )
-                    }
-                  })
-                : ""}
-            </div>
-          )}
+                        )}
+                        <div className="artist-albums__info">
+                          <span className="artist-albums__title">{album.title}</span>
+                          <span className="artist-albums__date">{new Date(album.releaseDate).getFullYear()}</span>
+                          <span className="artist-albums__rating">{album.rating ? album.rating : "-"}</span>
+                        </div>
+                      </Link>
+                    )
+                  }
+                })
+              : ""}
+          </div>
+        )}
 
-          {Boolean(
-            artistState.artistData.albums.filter(album => {
-              return album.type == "Live"
-            }).length
-          ) && (
-            <div className="artist-albums__section">
-              <h3 className="artist-albums__section-title">Live</h3>
-              {artistState.artistData.albums
-                ? artistState.artistData.albums.map(album => {
-                    if (album.type == "Live") {
-                      return (
-                        <Link to={`/music/${artistState.artistData.slug}/${album.slug}`} className="artist-albums__album" key={album._id}>
-                          {Boolean(album.image) ? (
-                            <img className="artist-albums__image" src={album.image} />
-                          ) : (
-                            <div className="artist-albums__no-image">
-                              <FontAwesomeIcon icon={faImage} />
-                            </div>
-                          )}
-                          <div className="artist-albums__info">
-                            <span className="artist-albums__title">{album.title}</span>
-                            <span className="artist-albums__date">{new Date(album.releaseDate).getFullYear()}</span>
-                            <span className="artist-albums__rating">{album.rating ? album.rating : "-"}</span>
+        {Boolean(
+          artistState.artistData.albums.filter(album => {
+            return album.type == "Live"
+          }).length
+        ) && (
+          <div className="artist-albums__section">
+            <h3 className="artist-albums__section-title">Live</h3>
+            {artistState.artistData.albums
+              ? artistState.artistData.albums.map(album => {
+                  if (album.type == "Live") {
+                    return (
+                      <Link to={`/music/${artistState.artistData.slug}/${album.slug}`} className="artist-albums__album" key={album._id}>
+                        {Boolean(album.image) ? (
+                          <img className="artist-albums__image" src={album.image} />
+                        ) : (
+                          <div className="artist-albums__no-image">
+                            <FontAwesomeIcon icon={faImage} />
                           </div>
-                        </Link>
-                      )
-                    }
-                  })
-                : ""}
-            </div>
-          )}
+                        )}
+                        <div className="artist-albums__info">
+                          <span className="artist-albums__title">{album.title}</span>
+                          <span className="artist-albums__date">{new Date(album.releaseDate).getFullYear()}</span>
+                          <span className="artist-albums__rating">{album.rating ? album.rating : "-"}</span>
+                        </div>
+                      </Link>
+                    )
+                  }
+                })
+              : ""}
+          </div>
+        )}
 
-          {Boolean(
-            artistState.artistData.albums.filter(album => {
-              return album.type == "Compilation"
-            }).length
-          ) && (
-            <div className="artist-albums__section">
-              <h3 className="artist-albums__section-title">Compilations</h3>
-              {artistState.artistData.albums
-                ? artistState.artistData.albums.map(album => {
-                    if (album.type == "Compilation") {
-                      return (
-                        <Link to={`/music/${artistState.artistData.slug}/${album.slug}`} className="artist-albums__album" key={album._id}>
-                          {Boolean(album.image) ? (
-                            <img className="artist-albums__image" src={album.image} />
-                          ) : (
-                            <div className="artist-albums__no-image">
-                              <FontAwesomeIcon icon={faImage} />
-                            </div>
-                          )}
-                          <div className="artist-albums__info">
-                            <span className="artist-albums__title">{album.title}</span>
-                            <span className="artist-albums__date">{new Date(album.releaseDate).getFullYear()}</span>
-                            <span className="artist-albums__rating">{album.rating ? album.rating : "-"}</span>
+        {Boolean(
+          artistState.artistData.albums.filter(album => {
+            return album.type == "Compilation"
+          }).length
+        ) && (
+          <div className="artist-albums__section">
+            <h3 className="artist-albums__section-title">Compilations</h3>
+            {artistState.artistData.albums
+              ? artistState.artistData.albums.map(album => {
+                  if (album.type == "Compilation") {
+                    return (
+                      <Link to={`/music/${artistState.artistData.slug}/${album.slug}`} className="artist-albums__album" key={album._id}>
+                        {Boolean(album.image) ? (
+                          <img className="artist-albums__image" src={album.image} />
+                        ) : (
+                          <div className="artist-albums__no-image">
+                            <FontAwesomeIcon icon={faImage} />
                           </div>
-                        </Link>
-                      )
-                    }
-                  })
-                : ""}
-            </div>
-          )}
-        </div>
+                        )}
+                        <div className="artist-albums__info">
+                          <span className="artist-albums__title">{album.title}</span>
+                          <span className="artist-albums__date">{new Date(album.releaseDate).getFullYear()}</span>
+                          <span className="artist-albums__rating">{album.rating ? album.rating : "-"}</span>
+                        </div>
+                      </Link>
+                    )
+                  }
+                })
+              : ""}
+          </div>
+        )}
       </div>
     </Page>
   )
