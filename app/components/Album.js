@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from "react"
-import {Link, useParams} from "react-router-dom"
+import {Link, Redirect, useParams, withRouter} from "react-router-dom"
 import Axios from "axios"
 import useCancelToken from "react-use-cancel-token"
 import {useImmer} from "use-immer"
@@ -9,32 +9,27 @@ import {faArrowRight} from "@fortawesome/free-solid-svg-icons"
 //Contexts
 import StateContext from "../contexts/StateContext"
 import DispatchContext from "../contexts/DispatchContext"
+import AlbumStateContext from "../contexts/AlbumStateContext"
+import AlbumDispatchContext from "../contexts/AlbumDispatchContext"
 
 //Components
 import Page from "./Page"
 import Loading from "./Loading"
-import AlbumProfile from "./AlbumProfile"
+import AlbumProfileContext from "./AlbumProfileContext"
 
-function Album() {
+function Album(props) {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
+  const albumState = useContext(AlbumStateContext)
+  const albumDispatch = useContext(AlbumDispatchContext)
   const {artist, album} = useParams()
   const {newCancelToken, cancelPreviousRequest, isCancel} = useCancelToken()
-  const [state, setState] = useImmer({
-    albumData: {},
-    colNum: 1,
-    loading: true
-  })
 
   useEffect(() => {
     if (appState.size == "medium" || appState.size == "large" || appState.size == "huge") {
-      setState(draft => {
-        draft.colNum = 2
-      })
+      albumDispatch({type: "setColNum", data: 2})
     } else {
-      setState(draft => {
-        draft.colNum = 1
-      })
+      albumDispatch({type: "setColNum", data: 1})
     }
   }, [appState.size])
 
@@ -50,10 +45,9 @@ function Album() {
           response.data.album.reviews.forEach(review => {
             review.date = new Date(review.date)
           })
-          setState(draft => {
-            draft.albumData = response.data.album
-            draft.loading = false
-          })
+
+          albumDispatch({type: "setAlbumData", data: response.data.album})
+          albumDispatch({type: "finishLoading"})
         } else {
           throw new Error(response.data.message)
         }
@@ -63,16 +57,14 @@ function Album() {
           return
         }
         appDispatch({type: "flashMessage", value: e.message, warning: true})
-        setState(draft => {
-          draft.loading = false
-        })
         console.log(e)
+        props.history.push(`/music/${artist}`)
       }
     }
     getAlbum()
   }, [album])
 
-  if (state.loading) {
+  if (albumState.loading) {
     return (
       <Page title="...">
         <Loading />
@@ -81,14 +73,15 @@ function Album() {
   }
 
   return (
-    <Page title={`${state.albumData.artist.name} - ${state.albumData.title}`}>
-      <AlbumProfile albumData={state.albumData} artist={artist} album={album} page="album" />
+    <Page title={`${albumState.albumData.artist.name} - ${albumState.albumData.title}`}>
+      <AlbumProfileContext artist={artist} album={album} page="album" albumData={albumState.albumData} />
 
-      {Boolean(state.albumData.reviews.length) && (
+      {Boolean(albumState.albumData.reviews.length) && (
         <div className="album-reviews">
+          <h3 className="album-reviews__title">Reviews</h3>
           <div className="album-reviews__column">
-            {state.albumData.reviews.map((review, index) => {
-              if (index % state.colNum == 0) {
+            {albumState.albumData.reviews.map((review, index) => {
+              if (index % albumState.colNum == 0) {
                 return (
                   <div className="album-reviews__review" key={review._id}>
                     <div className="album-reviews__body">{review.summary}</div>
@@ -111,8 +104,8 @@ function Album() {
             })}
           </div>
           <div className="album-reviews__column">
-            {state.albumData.reviews.map((review, index) => {
-              if (index % state.colNum == 1) {
+            {albumState.albumData.reviews.map((review, index) => {
+              if (index % albumState.colNum == 1) {
                 return (
                   <div className="album-reviews__review" key={review._id}>
                     <div className="album-reviews__body">{review.summary}</div>
@@ -140,4 +133,4 @@ function Album() {
   )
 }
 
-export default Album
+export default withRouter(Album)

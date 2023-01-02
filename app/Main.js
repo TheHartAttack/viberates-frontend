@@ -6,7 +6,7 @@ import {CSSTransition} from "react-transition-group"
 import _ from "lodash"
 import Axios from "axios"
 Axios.defaults.baseURL = process.env.BACKENDURL || "https://viberates.onrender.com"
-Axios.defaults.baseURL = "https://viberates.onrender.com"
+// Axios.defaults.baseURL = "https://viberates.onrender.com"
 
 //Stylesheet
 import "./assets/styles/styles.css"
@@ -26,12 +26,9 @@ const NewReleases = React.lazy(() => import("./components/NewReleases"))
 const TopUsers = React.lazy(() => import("./components/TopUsers"))
 const RecentReviews = React.lazy(() => import("./components/RecentReviews"))
 const AddArtist = React.lazy(() => import("./components/AddArtist"))
-const Artist = React.lazy(() => import("./components/Artist"))
-const EditArtist = React.lazy(() => import("./components/EditArtist"))
+const ArtistContext = React.lazy(() => import("./components/ArtistContext"))
 const EditHistoryArtist = React.lazy(() => import("./components/EditHistoryArtist"))
-const AddAlbum = React.lazy(() => import("./components/AddAlbum"))
-const Album = React.lazy(() => import("./components/Album"))
-const EditAlbum = React.lazy(() => import("./components/EditAlbum"))
+const AlbumContext = React.lazy(() => import("./components/AlbumContext"))
 const EditHistoryAlbum = React.lazy(() => import("./components/EditHistoryAlbum"))
 const ReviewContext = React.lazy(() => import("./components/ReviewContext"))
 const AddReview = React.lazy(() => import("./components/AddReview"))
@@ -177,32 +174,17 @@ function Main() {
               <Route path="/add-artist" exact>
                 <AddArtist />
               </Route>
-              <Route path="/edit/:artist" exact>
-                <EditArtist />
-              </Route>
-              <Route path="/edit-history/:artist" exact>
+              <Route path="/history/:artist" exact>
                 <EditHistoryArtist />
               </Route>
               <Route path="/music/:artist" exact>
-                <Artist />
+                <ArtistContext />
               </Route>
-              <Route path="/add-album/:artist" exact>
-                <AddAlbum />
-              </Route>
-              <Route path="/edit/:artist/:album" exact>
-                <EditAlbum />
-              </Route>
-              <Route path="/edit-history/:artist/:album" exact>
+              <Route path="/history/:artist/:album" exact>
                 <EditHistoryAlbum />
               </Route>
               <Route path="/music/:artist/:album" exact>
-                <Album />
-              </Route>
-              <Route path="/add-review/:artist/:album" exact>
-                <AddReview />
-              </Route>
-              <Route path="/edit/:artist/:album/:review" exact>
-                <EditReview />
+                <AlbumContext />
               </Route>
               <Route path="/music/:artist/:album/:review" exact>
                 <ReviewContext />

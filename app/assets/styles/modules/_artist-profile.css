@@ -28,12 +28,13 @@
     box-sizing: border-box;
   }
 
-  &__no-image {
+  &__placeholder {
     @extend &__image;
+    border: none;
     display: grid;
     place-items: center;
     font-size: 5rem;
-    background-color: $black;
+    background-color: color-mod($black tint(75%));
     color: $grey;
   }
 
@@ -55,10 +56,22 @@
     }
   }
 
+  &__group {
+    display: grid;
+    gap: 5px;
+    justify-items: center;
+    justify-content: center;
+
+    @media only screen and (min-width: $medium) {
+      justify-content: start;
+      justify-items: start;
+    }
+  }
+
   &__name {
     text-transform: uppercase;
     font-size: 2.25rem;
-    height: 2.25rem;
+    line-height: 1;
     font-weight: $bold;
     text-decoration: none;
     color: $black;
@@ -71,21 +84,27 @@
   }
 
   &__tags {
-    display: grid;
-    grid-auto-flow: column;
-    justify-content: start;
+    display: flex;
+    justify-items: start;
     gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    @media only screen and (min-width: $medium) {
+      justify-content: flex-start;
+    }
   }
 
   &__tag {
-    font-size: 0.625rem;
-    height: 0.625rem;
+    font-size: 0.75rem;
+    height: 0.75rem;
+    font-weight: 400;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 5px;
+    padding: 5px 7.5px;
     color: $grey;
     background-color: $red;
-    border-radius: 10px;
+    border-radius: 20px;
     transition: background-color 250ms ease-out;
 
     &:hover {
@@ -93,32 +112,75 @@
     }
   }
 
+  &__hr {
+    height: 1px;
+    width: 50%;
+    background-color: color-mod($black tint(75%));
+    margin: 20px 0;
+  }
+
   &__links {
     width: 100%;
     display: grid;
+    grid-column: 1/-1;
     gap: 5px;
-    grid-auto-flow: column;
+    justify-content: start;
+    grid-auto-flow: unset;
     justify-content: center;
 
-    @media only screen and (min-width: $medium) {
+    @media only screen and (min-width: $smallMedium) {
+      grid-auto-flow: column;
+    }
+
+    @media only screen and (min-width: $large) {
       grid-auto-flow: unset;
       justify-content: start;
     }
   }
 
+  &__link-item {
+    display: grid;
+    text-align: center;
+  }
+
   &__link {
-    display: inline-block;
-    background-color: $red;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1rem;
+    align-items: center;
+    justify-items: center;
     background-color: color-mod($black tint(50%));
-    padding: 5px 10px;
+    padding: 7.5px 10px;
     color: $grey;
     text-decoration: none;
     font-size: 0.625rem;
+    height: 1;
     text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    position: relative;
     transition: background-color 250ms ease-out;
 
     &:hover {
       background-color: color-mod($black tint(25%));
     }
+
+    & > span {
+      position: relative;
+      top: 2px;
+    }
+
+    & > svg {
+      font-size: 0.875rem;
+    }
+  }
+
+  &__button {
+    @extend &__link;
+    border: none;
+    cursor: pointer;
+    font-weight: $normal;
   }
 }

@@ -1,260 +1,248 @@
-import React, {useEffect, useContext} from "react"
-import Axios from "axios"
-import useCancelToken from "react-use-cancel-token"
-import {withRouter, Redirect, useParams, Link} from "react-router-dom"
-import {useImmer} from "use-immer"
+import React, {useEffect, useContext, useRef} from "react"
+import {withRouter} from "react-router-dom"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faTimes, faSave, faTrash} from "@fortawesome/free-solid-svg-icons"
+import {faImage, faTrashAlt, faFileUpload, faSave, faPlusCircle, faTimes, faMinusCircle, faGripLines} from "@fortawesome/free-solid-svg-icons"
+import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd"
 
 //Contexts
-import StateContext from "../contexts/StateContext"
-import DispatchContext from "../contexts/DispatchContext"
+import AlbumProfileStateContext from "../contexts/AlbumProfileStateContext"
+import AlbumProfileDispatchContext from "../contexts/AlbumProfileDispatchContext"
 
 //Components
-import Page from "./Page"
-import Loading from "./Loading"
-import ArtistProfile from "./ArtistProfile"
 import FormInput from "./form/FormInput"
-import ImageInput from "./form/ImageInput"
 import FormSubmit from "./form/FormSubmit"
 
-function EditAlbum(props) {
-  const appState = useContext(StateContext)
-  const appDispatch = useContext(DispatchContext)
-  const {artist, album} = useParams()
-  const {newCancelToken, cancelPreviousRequest, isCancel} = useCancelToken()
-  const [state, setState] = useImmer({
-    artistData: {},
-    id: "",
-    title: "",
-    image: "",
-    preview: "",
-    releaseDate: new Date(),
-    type: "Studio",
-    submitting: false,
-    submitCount: 0,
-    deleting: false,
-    deleteCount: 0,
-    loading: true
-  })
+function EditAlbum() {
+  const albumProfileState = useContext(AlbumProfileStateContext)
+  const albumProfileDispatch = useContext(AlbumProfileDispatchContext)
+  const imageInput = useRef("")
+  const trackInput = useRef("")
 
   useEffect(() => {
-    async function getAlbum() {
-      cancelPreviousRequest()
-
-      try {
-        const response = await Axios.get(`/artist/${artist}/album/${album}`, {cancelToken: newCancelToken()})
-
-        if (response.data.success) {
-          setState(draft => {
-            draft.artistData = response.data.album.artist
-            draft.id = response.data.album._id
-            draft.title = response.data.album.title
-            draft.releaseDate = new Date(response.data.album.releaseDate)
-            draft.type = response.data.album.type
-            draft.image = response.data.album.image
-            draft.preview = response.data.album.image
-            draft.loading = false
-          })
-        } else {
-          throw new Error(response.data.message)
-        }
-      } catch (e) {
-        if (isCancel(e)) {
-          console.log(e)
-          return
-        }
-        appDispatch({type: "flashMessage", value: e.message, warning: true})
-        setState(draft => {
-          draft.loading = false
-        })
-        console.log(e)
-      }
+    document.addEventListener("keyup", searchKeypressHandler)
+    return () => {
+      document.removeEventListener("keyup", searchKeypressHandler)
     }
-    getAlbum()
   }, [])
-
-  useEffect(() => {
-    if (state.submitCount) {
-      async function editAlbum() {
-        cancelPreviousRequest()
-
-        setState(draft => {
-          draft.submitting = true
-        })
-
-        try {
-          const formData = new FormData()
-          if (state.title) {
-            formData.append("title", state.title)
-          }
-          if (state.image) {
-            formData.append("image", state.image)
-          }
-          if (state.releaseDate) {
-            formData.append("releaseDate", state.releaseDate)
-          }
-          if (state.type) {
-            formData.append("type", state.type)
-          }
-
-          const response = await Axios.post(`/edit/artist/${artist}/album/${album}`, formData, {cancelToken: newCancelToken(), headers: {"Content-Type": "multipart/form-data", authorization: appState.user.token}})
-
-          if (response.data.success) {
-            appDispatch({type: "flashMessage", value: response.data.message})
-            setState(draft => {
-              draft.submitting = false
-            })
-            props.history.push(`/music/${artist}/${response.data.album.slug}`)
-          } else {
-            throw new Error(response.data.message)
-          }
-        } catch (e) {
-          if (isCancel(e)) {
-            console.log(e)
-            return
-          }
-          appDispatch({type: "flashMessage", value: e.message, warning: true})
-          setState(draft => {
-            draft.submitting = false
-          })
-          console.log(e)
-        }
-      }
-      editAlbum()
-    }
-  }, [state.submitCount])
-
-  useEffect(() => {
-    if (state.deleteCount) {
-      async function deleteAlbum() {
-        cancelPreviousRequest()
-
-        setState(draft => {
-          draft.deleting = true
-        })
-
-        try {
-          const response = await Axios.post(`/deleteAlbum`, {albumId: state.id, albumTitle: state.title}, {cancelToken: newCancelToken(), headers: {authorization: appState.user.token}})
-
-          if (response.data.success) {
-            appDispatch({type: "flashMessage", value: response.data.message})
-            setState(draft => {
-              draft.deleting = false
-            })
-            props.history.push(`/music/${artist}`)
-          } else {
-            throw new Error(response.data.message)
-          }
-        } catch (e) {
-          if (isCancel(e)) {
-            console.log(e)
-            return
-          }
-          appDispatch({type: "flashMessage", value: e.message, warning: true})
-          setState(draft => {
-            draft.deleting = false
-          })
-          console.log(e)
-        }
-      }
-      deleteAlbum()
-    }
-  }, [state.deleteCount])
 
   function handleSubmit(e) {
     e.preventDefault()
-    setState(draft => {
-      draft.submitCount++
-    })
+    albumProfileDispatch({type: "submit"})
   }
 
-  function handleDelete(e) {
+  function handleImage(e) {
+    if (e.target.files[0]) {
+      albumProfileDispatch({type: "setEditPreview", data: URL.createObjectURL(e.target.files[0])})
+      albumProfileDispatch({type: "setEditImage", data: e.target.files[0]})
+    }
+  }
+
+  function deleteImage(e) {
+    imageInput.current.value = ""
+    albumProfileDispatch({type: "setEditPreview", data: ""})
+    albumProfileDispatch({type: "setEditImage", data: ""})
+  }
+
+  function addTrack(e) {
     e.preventDefault()
-    setState(draft => {
-      draft.deleteCount++
+    if (trackInput.current.value) {
+      albumProfileDispatch({type: "editTracklistAdd", data: {name: trackInput.current.value, id: new Date().getTime().toString()}})
+      trackInput.current.value = ""
+    }
+  }
+
+  function removeTrack(e, index) {
+    e.preventDefault()
+    albumProfileDispatch({type: "editTracklistRemove", data: index})
+  }
+
+  function handleOnDragEnd(result) {
+    console.log(result)
+    if (!result.destination) {
+      return
+    }
+    albumProfileDispatch({type: "editTracklistReorder", sourceIndex: result.source.index, destIndex: result.destination.index})
+  }
+
+  function searchKeypressHandler(e) {
+    e.preventDefault()
+    if (e.keyCode == 27) {
+      albumProfileDispatch({type: "finishEditing"})
+    }
+    if (document.activeElement == trackInput.current && e.keyCode == 13 && !e.shiftKey) {
+      addTrack(e)
+    }
+  }
+
+  function resetEditData() {
+    albumProfileDispatch({type: "setEditTitle", data: albumProfileState.albumData.title})
+    albumProfileDispatch({type: "setEditImage", data: albumProfileState.albumData.image})
+    albumProfileDispatch({type: "setEditPreview", data: albumProfileState.albumData.image})
+    albumProfileDispatch({type: "setEditReleaseDate", data: albumProfileState.albumData.releaseDate})
+    albumProfileDispatch({type: "setEditType", data: albumProfileState.albumData.type})
+    albumProfileDispatch({
+      type: "setEditTracklist",
+      data: albumProfileState.albumData.tracklist.map((track, index) => {
+        return {name: track, id: `${index.toString()}${track}`}
+      })
     })
-  }
-
-  if (!appState.user.token || appState.user.suspended) {
-    return <Redirect to={`/music/${artist}/${album}`} />
-  }
-
-  if (state.loading) {
-    return (
-      <Page title="Edit Artist">
-        <Loading />
-      </Page>
-    )
   }
 
   return (
-    <Page title="Edit Album">
-      <ArtistProfile artistData={state.artistData} artist={artist} page="edit-album" />
+    <>
+      <button
+        className="edit-album__close"
+        onClick={e => {
+          albumProfileDispatch({type: "finishEditing"})
+        }}
+      >
+        <FontAwesomeIcon icon={faTimes} />
+      </button>
+      <form onSubmit={handleSubmit} className="edit-album__form" encType="multipart/form-data">
+        <h3 className="edit-album__heading">
+          Edit <span className="edit-album__heading-artist">{albumProfileState.albumData.title}</span>
+        </h3>
 
-      <form onSubmit={handleSubmit} className="form add-edit-album" encType="multipart/form-data">
-        <FormInput
-          form="album"
-          type="text"
-          label="Name"
-          name="name"
-          value={state.title}
-          onChange={e => {
-            setState(draft => {
-              draft.title = e.target.value
-            })
-          }}
-        />
+        <div className="form__group image-input edit-album__image-input">
+          <label className="form__label edit-album__image-label" htmlFor="">
+            Image
+          </label>
 
-        <FormInput
-          form="album"
-          type="date"
-          label="Release Date"
-          name="releaseDate"
-          releaseDate={state.releaseDate}
-          onChange={date => {
-            setState(draft => {
-              draft.releaseDate = date
-            })
-          }}
-        />
+          {albumProfileState.edit.preview ? (
+            <img className="image-input__preview edit-album__image-preview" src={albumProfileState.edit.preview} alt={albumProfileState.edit.image.name ? albumProfileState.edit.image.name : ""} />
+          ) : (
+            <div className="image-input__placeholder edit-album__image-placeholder">
+              <FontAwesomeIcon icon={faImage} />
+            </div>
+          )}
 
-        <FormInput
-          form="album"
-          type="select"
-          label="Type"
-          name="type"
-          className="narrow"
-          value={state.type}
-          options={["Studio", "EP", "Live", "Compilation"]}
-          onChange={e => {
-            setState(draft => {
-              draft.type = e.target.value
-            })
-          }}
-        />
+          <div className="image-input__buttons edit-album__image-buttons">
+            <label className="image-input__label edit-album__image-button-label" htmlFor="edit-album__image-input">
+              <FontAwesomeIcon icon={faFileUpload} />
+              <input onChange={handleImage} ref={imageInput} className="image-input__file edit-album__image-file" type="file" name="image" id="edit-album__image-input" />
+            </label>
 
-        <ImageInput form="artist" label="Image" name="image" image={state.image} preview={state.preview} setState={setState} />
-
-        <div className="form__buttons">
-          <Link to={`/music/${artist}/${album}`} className="button button--cancel">
-            Cancel <FontAwesomeIcon icon={faTimes} />
-          </Link>
-
-          <FormSubmit disabled={state.submitting}>
-            Save changes <FontAwesomeIcon icon={faSave} />
-          </FormSubmit>
-        </div>
-
-        {(appState.user.type.includes("admin") || appState.user.type.includes("mod")) && (
-          <div className="form__buttons">
-            <button onClick={handleDelete} type="button" className="button" disabled={state.deleting}>
-              Delete album <FontAwesomeIcon icon={faTrash} />
+            <button onClick={deleteImage} className="image-input__delete edit-album__image-delete" type="button" disabled={!albumProfileState.edit.preview}>
+              <FontAwesomeIcon icon={faTrashAlt} />
             </button>
           </div>
-        )}
+        </div>
+
+        <div className="edit-album__inputs">
+          <FormInput
+            form="album"
+            type="text"
+            label="Title"
+            name="title"
+            value={albumProfileState.edit.title}
+            onChange={e => {
+              albumProfileDispatch({type: "setEditTitle", data: e.target.value})
+            }}
+          />
+
+          <div className="edit-album__date-type">
+            <FormInput
+              form="album"
+              type="date"
+              label="Release Date"
+              name="releaseDate"
+              releaseDate={albumProfileState.edit.releaseDate}
+              onChange={date => {
+                albumProfileDispatch({type: "setEditReleaseDate", data: date})
+              }}
+            />
+
+            <FormInput
+              form="album"
+              type="select"
+              label="Type"
+              name="type"
+              className="edit-album__type-select"
+              value={albumProfileState.edit.type}
+              options={["Studio", "EP", "Live", "Compilation"]}
+              onChange={e => {
+                albumProfileDispatch({type: "setEditType", data: e.target.value})
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="form__group edit-album__tracklist">
+          <label className="form__label" htmlFor="album-tracklist">
+            Tracklist
+          </label>
+
+          {Boolean(albumProfileState.edit.tracklist?.length) && (
+            <DragDropContext onDragEnd={handleOnDragEnd}>
+              <Droppable droppableId="tracks">
+                {provided => (
+                  <ol className="edit-album__tracklist-list" {...provided.droppableProps} ref={provided.innerRef}>
+                    {albumProfileState.edit.tracklist.map((track, index) => {
+                      return (
+                        <Draggable key={track.id} draggableId={track.id} index={index}>
+                          {provided => (
+                            <li className="edit-album__tracklist-track" data-index={index + 1} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                              <span className="edit-album__tracklist-name">{track.name}</span>
+                              <FontAwesomeIcon icon={faGripLines} className="edit-album__grip-lines" />
+                              <button
+                                type="button"
+                                className="button edit-album__tracklist-remove"
+                                onClick={e => {
+                                  removeTrack(e, index)
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faMinusCircle} />
+                              </button>
+                            </li>
+                          )}
+                        </Draggable>
+                      )
+                    })}
+                    {provided.placeholder}
+                  </ol>
+                )}
+              </Droppable>
+            </DragDropContext>
+          )}
+
+          <div className="edit-album__tracklist-input-wrapper">
+            <input
+              type="text"
+              name="track-1"
+              className="edit-album__tracklist-input form__input"
+              ref={trackInput}
+              placeholder="Add a track..."
+              autoComplete="off"
+              onKeyDown={e => {
+                if (e.keyCode == 13) {
+                  e.preventDefault()
+                }
+              }}
+            />
+            <button type="button" className="button edit-album__tracklist-add" onClick={addTrack}>
+              <FontAwesomeIcon icon={faPlusCircle} />
+            </button>
+          </div>
+        </div>
+
+        <div className="edit-album__buttons">
+          <button
+            className="button edit-album__cancel"
+            type="button"
+            onClick={e => {
+              albumProfileDispatch({type: "finishEditing"})
+              resetEditData()
+            }}
+          >
+            <span>Cancel</span>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+          <FormSubmit className="edit-album__submit" icon={faSave} submitting={albumProfileState.edit.submitting} disabled={!albumProfileState.edit.title || !albumProfileState.edit.releaseDate || !albumProfileState.edit.type}>
+            <span>Save</span>
+          </FormSubmit>
+        </div>
       </form>
-    </Page>
+    </>
   )
 }
 

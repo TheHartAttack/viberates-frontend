@@ -15,3 +15,5 @@
   src: url("/assets/fonts/Futura-Bold.ttf") format("opentype");
   font-weight: 900;
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");

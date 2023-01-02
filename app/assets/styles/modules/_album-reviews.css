@@ -18,6 +18,15 @@
     grid-column: 4/13;
   }
 
+  &__title {
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: $normal;
+    font-size: 1rem;
+    height: 1rem;
+    grid-column: 1/-1;
+  }
+
   &__column {
     display: grid;
     gap: 20px;
@@ -36,8 +45,8 @@
     padding: 20px 20px 10px;
     text-align: center;
     font-size: 1rem;
+    font-weight: 400;
     line-height: 1.25rem;
-    font-weight: lighter;
   }
 
   &__rating {
@@ -45,28 +54,37 @@
     align-items: flex-start;
     justify-content: center;
     padding: 20px;
-    font-size: 1.5rem;
-    font-weight: 900;
+    font-size: 2rem;
+    font-weight: 700;
+    background-color: color-mod($black tint(6.25%));
   }
 
   &__posted {
     text-align: center;
     font-size: 0.625rem;
-    color: color-mod($grey shade(50%));
+    font-weight: 400;
+    color: color-mod($black tint(50%));
     padding: 10px 0;
     grid-column: 1/2;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-top: 1px solid color-mod($black tint(6.25%));
   }
 
   &__author {
-    color: $grey;
+    color: color-mod($black tint(50%));
     text-decoration: none;
+    font-weight: 500;
+    transition: color 250ms ease-out;
+
+    &:hover {
+      color: color-mod($black tint(75%));
+    }
   }
 
   &__date {
-    color: color-mod($grey shade(50%));
+    color: color-mod($black tint(50%));
   }
 
   &__link {
@@ -80,7 +98,7 @@
     cursor: pointer;
     transition: background-color 250ms ease-out;
     grid-column: 2/3;
-    font-size: 0.75rem;
+    font-size: 1rem;
 
     &:hover {
       background-color: color-mod($red shade(25%));

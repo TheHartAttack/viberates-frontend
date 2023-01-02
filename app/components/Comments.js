@@ -100,9 +100,9 @@ function Comments() {
 
   function toggleEdit(targetComment) {
     if (!targetComment.edit.open) {
-      reviewDispatch({type: "openEdit", data: targetComment})
+      reviewDispatch({type: "openEditComment", data: targetComment})
     } else {
-      reviewDispatch({type: "closeEdit", data: targetComment})
+      reviewDispatch({type: "closeEditComment", data: targetComment})
     }
   }
 
@@ -119,8 +119,8 @@ function Comments() {
       const response = await Axios.post(`/edit-comment/comment/${targetComment._id}`, {comment: targetComment.edit.body, token: appState.user.token}, {cancelToken: newCancelToken()})
 
       if (response.data.success) {
-        reviewDispatch({type: "saveEdit", data: targetComment})
-        reviewDispatch({type: "closeEdit", data: targetComment})
+        reviewDispatch({type: "saveEditComment", data: targetComment})
+        reviewDispatch({type: "closeEditComment", data: targetComment})
         reviewDispatch({type: "finishSaving", data: targetComment})
       } else {
         throw new Error(response.data.message)
@@ -132,7 +132,7 @@ function Comments() {
       }
       appDispatch({type: "flashMessage", value: e.message, warning: true})
       console.log(e)
-      reviewDispatch({type: "closeEdit", data: targetComment})
+      reviewDispatch({type: "closeEditComment", data: targetComment})
       reviewDispatch({type: "finishSaving", data: targetComment})
     }
   }

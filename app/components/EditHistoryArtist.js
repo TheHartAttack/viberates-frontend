@@ -1,10 +1,10 @@
 import React, {useEffect, useContext} from "react"
-import {Link, Redirect, useParams} from "react-router-dom"
+import {Link, Redirect, useParams, withRouter} from "react-router-dom"
 import {useImmer} from "use-immer"
 import Axios from "axios"
 import useCancelToken from "react-use-cancel-token"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faUndoAlt} from "@fortawesome/free-solid-svg-icons"
+import {faUndoAlt, faEllipsisH, faUsers} from "@fortawesome/free-solid-svg-icons"
 
 //Contexts
 import StateContext from "../contexts/StateContext"
@@ -13,9 +13,9 @@ import DispatchContext from "../contexts/DispatchContext"
 //Components
 import Page from "./Page"
 import Loading from "./Loading"
-import ArtistProfile from "./ArtistProfile"
+import ArtistProfileContext from "./ArtistProfileContext"
 
-function EditHistoryArtist() {
+function EditHistoryArtist(props) {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   const {newCancelToken, cancelPreviousRequest, isCancel} = useCancelToken()
@@ -62,10 +62,8 @@ function EditHistoryArtist() {
           return
         }
         appDispatch({type: "flashMessage", value: e.message, warning: true})
-        setState(draft => {
-          draft.loading = false
-        })
         console.log(e)
+        props.history.push(`/music/${artist}`)
       }
     }
     getEdits()
@@ -99,6 +97,7 @@ function EditHistoryArtist() {
           draft.editHistory[index].loading = false
           draft.editHistory.unshift(response.data.edit)
           draft.artistData.name = response.data.edit.data.name
+          draft.artistData.slug = response.data.edit.data.slug
           draft.artistData.image = response.data.edit.data.image
         })
 
@@ -176,49 +175,35 @@ function EditHistoryArtist() {
     )
   }
 
-  if (!state.loading && !state.artistData.name) {
-    return <Redirect to="/" />
-  }
-
   return (
     <Page title={state.artistData.name}>
-      <ArtistProfile artistData={state.artistData} artist={artist} page="artist-edit-history" />
+      <ArtistProfileContext artistData={state.artistData} artist={artist} page="history" setEditHistoryState={setState} />
 
       {Boolean(state.editHistory.length) && (
         <div className="edit-history">
-          {state.editHistory.map(item => {
+          <h3 className="edit-history__title">Edit History</h3>
+          {state.editHistory.map((item, index) => {
             return (
-              <div className="edit-history__item" key={item._id}>
+              <div className="edit-history__item" key={index}>
                 <span className="edit-history__header">
-                  {item.initial ? "Added" : "Edited"} by{" "}
-                  <Link className="edit-history__user" to={`/user/${item.user.slug}`}>
-                    {item.user.username}
-                  </Link>{" "}
-                  on{" "}
-                  <span className="edit-history__date">
-                    {item.date.getDate()}/{item.date.getMonth() + 1}/{item.date.getFullYear()}
-                  </span>{" "}
-                  at{" "}
-                  <span className="edit-history__time">
-                    {item.date.getHours()}:{String(item.date.getMinutes()).padStart(2, "0")}
+                  <span className="edit-history__by">
+                    {item.initial ? "Added" : "Edited"} by{" "}
+                    <Link className="edit-history__user" to={`/user/${item.user.slug}`}>
+                      {item.user.username}
+                    </Link>{" "}
                   </span>
-                </span>
 
-                <div className="edit-history__body">
-                  <div className="edit-history__change">
-                    <span className="edit-history__change-data">
-                      <img src={item.data.image} alt={item.data.name ? item.data.name : item.data.title} />
+                  <span className="edit-history__on">
+                    <span className="edit-history__date">
+                      {item.date.getDate()}/{item.date.getMonth() + 1}/{item.date.getFullYear()}
+                    </span>{" "}
+                    at{" "}
+                    <span className="edit-history__time">
+                      {item.date.getHours()}:{String(item.date.getMinutes()).padStart(2, "0")}
                     </span>
-                  </div>
+                  </span>
 
-                  <div className="edit-history__change">
-                    <span className="edit-history__change-label">Name: </span>
-                    <span className="edit-history__change-data">{item.data.name}</span>
-                  </div>
-                </div>
-
-                {(item.data.name != state.artistData.name || item.data.image != state.artistData.image) && (
-                  <div className="edit-history__footer">
+                  {(item.data.name != state.artistData.name || item.data.image != state.artistData.image) && (
                     <button
                       onClick={e => {
                         revert(item._id)
@@ -230,19 +215,39 @@ function EditHistoryArtist() {
                         <Loading fontSize="16" />
                       ) : (
                         <>
-                          <span>Revert</span> <FontAwesomeIcon icon={faUndoAlt} />
+                          <FontAwesomeIcon icon={faUndoAlt} />
                         </>
                       )}
                     </button>
+                  )}
+                </span>
+
+                <div className="edit-history__body">
+                  <div className="edit-history__change">
+                    <span className="edit-history__change-data">
+                      {Boolean(item.data.image) ? (
+                        <img src={item.data.image} alt={item.data.name ? item.data.name : item.data.title} />
+                      ) : (
+                        <div className="edit-history__placeholder edit-history__placeholder--artist">
+                          <FontAwesomeIcon icon={faUsers} />
+                        </div>
+                      )}
+                    </span>
                   </div>
-                )}
+
+                  <div className="edit-history__change">
+                    <span className="edit-history__change-label">Name: </span>
+                    <span className="edit-history__change-data">{item.data.name}</span>
+                  </div>
+                </div>
               </div>
             )
           })}
 
           {state.moreResults && (
             <button onClick={e => loadMore(e)} className="edit-history__more" disabled={state.loadingMoreResults}>
-              {state.loadingMoreResults ? <Loading fontSize="12" /> : "Load more"}
+              <span>Load more</span>
+              {state.loadingMoreResults ? <Loading fontSize="12" className="edit-history" /> : <FontAwesomeIcon icon={faEllipsisH} />}
             </button>
           )}
         </div>
@@ -251,4 +256,4 @@ function EditHistoryArtist() {
   )
 }
 
-export default EditHistoryArtist
+export default withRouter(EditHistoryArtist)

@@ -20,6 +20,7 @@
     display: grid;
     gap: 5px;
     position: relative;
+    grid-column: 1/2;
 
     &--narrow {
       justify-content: start;
@@ -43,6 +44,7 @@
     font-weight: $normal;
     font-size: 1rem;
     line-height: 1.5rem;
+    box-sizing: border-box;
 
     &--date {
       width: 100%;
@@ -99,7 +101,12 @@
 
   &__select {
     &--narrow {
+      justify-self: stretch;
       justify-self: flex-start;
+
+      @media only screen and (min-width: $large) {
+        justify-self: flex-start;
+      }
     }
   }
 }

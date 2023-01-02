@@ -1,0 +1,361 @@
+.edit-album {
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: color-mod($black a(0.99));
+  display: grid;
+  align-items: center;
+  gap: 50px;
+  padding: 5rem 1rem;
+  overflow: auto;
+
+  &__close {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translateX(50%);
+    height: 100%;
+    width: $headerHeight;
+    height: $headerHeight;
+    place-items: center;
+    font-size: 2.5rem;
+    display: grid;
+    color: $red;
+    background-color: unset;
+    border: none;
+    cursor: pointer;
+    transition: color 250ms ease-out;
+
+    &:hover {
+      color: color-mod($red shade(50%));
+    }
+
+    @media only screen and (min-width: $large) {
+      right: 0;
+      transform: translateX(0%);
+    }
+  }
+
+  &__form {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+    justify-content: center;
+    gap: 20px;
+    margin: 0;
+    font-size: 1.125rem;
+
+    @media only screen and (min-width: $large) {
+      grid-template-columns: repeat(3, 300px);
+      gap: 50px;
+    }
+
+    @media only screen and (min-width: $huge) {
+      grid-template-columns: repeat(3, 400px);
+    }
+  }
+
+  &__heading {
+    color: $white;
+    grid-column: 1/-1;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 20px;
+
+    @media only screen and (min-width: $large) {
+      margin-top: 0;
+    }
+  }
+
+  &__heading-artist {
+    font-size: 1.125rem;
+    font-weight: 600;
+    display: block;
+
+    @media only screen and (min-width: $large) {
+      display: inline;
+    }
+  }
+
+  &__image-input {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    align-content: start;
+    justify-self: center;
+    width: 100%;
+
+    @media only screen and (min-width: $large) {
+      grid-area: 2/1/3/2;
+    }
+  }
+
+  &__image-placeholder {
+    width: 100%;
+    aspect-ratio: 1/1;
+
+    @media only screen and (min-width: $medium) {
+    }
+  }
+
+  &__image-preview {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+
+    @media only screen and (min-width: $large) {
+    }
+  }
+
+  &__image-button-label {
+    display: grid;
+    place-content: center;
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 500px;
+    justify-self: center;
+    width: 100%;
+
+    @media only screen and (min-width: $large) {
+      grid-area: 2/2/3/3;
+    }
+  }
+
+  &__type-select {
+    @media only screen and (min-width: $medium) {
+      justify-self: flex-start;
+    }
+  }
+
+  &__date-type {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    @media only screen and (min-width: $small) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    & > .form__group {
+      grid-column: unset;
+
+      & > .form__input {
+        width: 100%;
+      }
+    }
+  }
+
+  &__tracklist {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    align-content: start;
+    max-width: 500px;
+    justify-self: center;
+    width: 100%;
+
+    @media only screen and (min-width: $large) {
+      grid-area: 2/3/3/4;
+    }
+  }
+
+  &__tracklist-input-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__tracklist-input {
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid $white;
+    color: $white;
+    font-weight: 400;
+    padding: 5px;
+    width: 100%;
+    grid-column: 1/3;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__tracklist-add {
+    height: 100%;
+    width: auto;
+    padding: 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: transparent;
+    color: color-mod($white shade(50%));
+    transition: color 250ms ease-out;
+
+    &:hover {
+      background-color: transparent;
+      color: $white;
+    }
+  }
+
+  &__tracklist-list {
+    margin: 0;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__tracklist-track {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 1rem;
+    align-items: center;
+    position: relative;
+    color: $white;
+    font-weight: 400;
+    padding: 0;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    &:nth-child(odd) {
+      background-color: color-mod($black tint(18.75%));
+    }
+
+    &:nth-child(even) {
+      background-color: color-mod($black tint(12.5%));
+    }
+
+    &::before {
+      content: attr(data-index) ". ";
+      position: absolute;
+      top: 50%;
+      left: 2.25rem;
+      transform: translate(-100%, -50%);
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1;
+      color: color-mod($white shade(50%));
+    }
+
+    &:hover,
+    &:active {
+      &:not(:has(.add-album__tracklist-remove:hover)) {
+        .edit-album__grip-lines {
+          color: color-mod($white shade(50%));
+        }
+      }
+    }
+  }
+
+  &__tracklist-name {
+    padding: 10px 10px 10px 3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__grip-lines {
+    color: transparent;
+    transition: color 250ms ease-out;
+  }
+
+  &__tracklist-remove {
+    height: 100%;
+    width: auto;
+    padding: 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    display: inline-grid;
+    background-color: transparent;
+    color: color-mod($white shade(50%));
+    transition: color 250ms ease-out;
+
+    &:hover {
+      background-color: transparent;
+      color: $white;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+
+    @media only screen and (min-width: $large) {
+      grid-area: 3/1/4/-1;
+      margin-top: 0;
+    }
+  }
+
+  &__cancel {
+    background-color: color-mod($white shade(50%));
+    transition: all 250ms ease-in-out;
+
+    &:hover {
+      background-color: color-mod($white shade(75%));
+    }
+  }
+
+  &__submit {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1rem;
+    align-items: center;
+    justify-items: center;
+    background-color: $red;
+    padding: 10px;
+    color: $white;
+    text-decoration: none;
+    font-size: 0.875rem;
+    line-height: 1;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 250ms ease-out;
+
+    &:hover {
+      background-color: color-mod($red shade(50%));
+    }
+
+    &:disabled {
+      background-color: color-mod($black tint(75%));
+      cursor: auto;
+    }
+
+    @media only screen and (min-width: $large) {
+      grid-area: 3/1/4/4;
+      margin-top: 0;
+    }
+  }
+
+  &-enter {
+    opacity: 0;
+
+    &-active {
+      opacity: 1;
+      transition: opacity 205ms ease-out;
+    }
+  }
+
+  &-exit {
+    opacity: 1;
+
+    &-active {
+      opacity: 0;
+      transition: opacity 205ms ease-out;
+    }
+  }
+}

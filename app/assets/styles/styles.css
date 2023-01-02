@@ -8,6 +8,7 @@
 
 /*Modules*/
 @import "modules/_app";
+@import "modules/_button";
 @import "modules/_header";
 @import "modules/_footer";
 @import "modules/_user";
@@ -28,20 +29,23 @@
 @import "modules/_user-profile";
 @import "modules/_user-image";
 @import "modules/_user-reviews";
-@import "modules/_add-edit-artist";
+@import "modules/_add-artist";
 @import "modules/_loading";
+@import "modules/_artist";
 @import "modules/_artist-profile";
 @import "modules/_artist-albums";
-@import "modules/_add-edit-album";
+@import "modules/_add-album";
+@import "modules/_edit-album";
+@import "modules/_edit-artist";
+@import "modules/_edit-review";
 @import "modules/_album-profile";
 @import "modules/_album-reviews";
-@import "modules/_add-edit-review";
+@import "modules/_add-review";
 @import "modules/_review";
 @import "modules/_comments";
 @import "modules/_hot-albums";
 @import "modules/_edit-history";
 @import "modules/_search";
-@import "modules/_button";
 @import "modules/_contact";
 @import "modules/_chat";
 @import "modules/_live-validate-message";

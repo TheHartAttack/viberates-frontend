@@ -1,12 +1,17 @@
 import React, {useEffect} from "react"
 import {Link} from "react-router-dom"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons"
+import {faArrowRight, faImage} from "@fortawesome/free-solid-svg-icons"
 
 function ReviewTile(props) {
   return (
     <div className="review-tile">
-      <img className="review-tile__image" src={props.review.album.image} />
+      {Boolean(props.review.album.image) && <img className="review-tile__image" src={props.review.album.image} />}
+      {!Boolean(props.review.album.image) && (
+        <div className="review-tile__placeholder">
+          <FontAwesomeIcon icon={faImage} />
+        </div>
+      )}
       <div className="review-tile__info">
         <Link to={`/music/${props.review.album.artist.slug}/${props.review.album.slug}`} className="review-tile__title">
           {props.review.album.title}

@@ -1,50 +1,84 @@
-import React, {useEffect, useState, useContext} from "react"
-import {Link} from "react-router-dom"
-import StateContext from "../contexts/StateContext"
+import React, {useEffect, useContext} from "react"
+import {Link, withRouter, useParams} from "react-router-dom"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faImage} from "@fortawesome/free-solid-svg-icons"
+import {faImage, faEdit, faHistory, faPlus, faArrowRight} from "@fortawesome/free-solid-svg-icons"
 
-function AlbumProfile(props) {
+//Contexts
+import StateContext from "../contexts/StateContext"
+import AlbumProfileStateContext from "../contexts/AlbumProfileStateContext"
+import AlbumProfileDispatchContext from "../contexts/AlbumProfileDispatchContext"
+
+//Components
+
+function AlbumProfile() {
   const appState = useContext(StateContext)
-  let [userHasReviewed, setUserHasReviewed] = useState(false)
+  const albumProfileState = useContext(AlbumProfileStateContext)
+  const albumProfileDispatch = useContext(AlbumProfileDispatchContext)
+  const {artist, album} = useParams()
 
   useEffect(() => {
-    props.albumData.reviews.map(review => {
+    albumProfileState.albumData.reviews.map(review => {
       if (review.author._id == appState.user._id) {
-        setUserHasReviewed(true)
+        albumProfileDispatch({type: "userHasReviewed", data: review._id})
+      } else {
+        albumProfileDispatch({type: "userHasNotReviewed"})
       }
     })
-  }, [props.albumData])
+  }, [albumProfileState.albumData])
+
+  function openEditAlbum(e) {
+    e.preventDefault()
+    albumProfileDispatch({type: "startEditing"})
+  }
+
+  function openAddReview(e) {
+    e.preventDefault()
+    if (!albumProfileState.userHasReviewed) {
+      albumProfileDispatch({type: "startAddReview"})
+    }
+  }
 
   return (
     <div className="album-profile">
-      {Boolean(props.albumData.image) && <img className="album-profile__image" src={props.albumData.image} alt={props.albumData.title} />}
-      {Boolean(!props.albumData.image) && (
-        <div className="album-profile__no-image">
+      {Boolean(albumProfileState.albumData.image) && <img className="album-profile__image" src={albumProfileState.albumData.image} alt={albumProfileState.albumData.title} />}
+      {Boolean(!albumProfileState.albumData.image) && (
+        <div className="album-profile__placeholder">
           <FontAwesomeIcon icon={faImage} />
         </div>
       )}
 
       <div className="album-profile__info">
         <div className="album-profile__group">
-          {props.page != "album" && (
-            <Link to={`/music/${props.albumData.artist.slug}/${props.albumData.slug}`} className="album-profile__title">
-              {props.albumData.title}
+          {albumProfileState.page != "album" && (
+            <Link to={`/music/${albumProfileState.albumData.artist.slug}/${albumProfileState.albumData.slug}`} className="album-profile__title">
+              {albumProfileState.albumData.title}
             </Link>
           )}
-          {props.page == "album" && <h2 className="album-profile__title">{props.albumData.title}</h2>}
-          <Link to={`/music/${props.albumData.artist.slug}`} className="album-profile__artist">
-            {props.albumData.artist.name}
+          {albumProfileState.page == "album" && <h2 className="album-profile__title">{albumProfileState.albumData.title}</h2>}
+          <Link to={`/music/${albumProfileState.albumData.artist.slug}`} className="album-profile__artist">
+            {albumProfileState.albumData.artist.name}
           </Link>
         </div>
 
-        {props.albumData.releaseDate && <div className="album-profile__date">{props.albumData.releaseDate.getFullYear()}</div>}
+        {albumProfileState.albumData.releaseDate && <div className="album-profile__date">{albumProfileState.albumData.releaseDate.getFullYear()}</div>}
 
-        {Boolean(props.albumData.tags.length) && Boolean(props.albumData.rating) && (
+        {Boolean(albumProfileState.albumData.tracklist?.length) && (
+          <ol className="album-profile__tracklist">
+            {albumProfileState.albumData.tracklist.map((track, index) => {
+              return (
+                <li key={index} className="album-profile__track">
+                  {track}
+                </li>
+              )
+            })}
+          </ol>
+        )}
+
+        {Boolean(albumProfileState.albumData.tags.length) && Boolean(albumProfileState.albumData.rating) && (
           <div className="album-profile__rating-tags">
-            {Boolean(props.albumData.tags.length) && (
+            {Boolean(albumProfileState.albumData.tags.length) && (
               <div className="album-profile__tags">
-                {props.albumData.tags.map((tag, index) => {
+                {albumProfileState.albumData.tags.map((tag, index) => {
                   return (
                     <Link to={`/tag/${tag.slug}`} className="album-profile__tag" key={index}>
                       {tag.name}
@@ -54,31 +88,45 @@ function AlbumProfile(props) {
               </div>
             )}
 
-            {Boolean(props.albumData.rating) && <span className="album-profile__rating">{props.albumData.rating ? props.albumData.rating : "-"}</span>}
+            {Boolean(albumProfileState.albumData.rating) && <span className="album-profile__rating">{albumProfileState.albumData.rating ? albumProfileState.albumData.rating : "-"}</span>}
           </div>
         )}
       </div>
 
+      <div className="album-profile__hr"></div>
+
       {appState.loggedIn && !appState.user.suspended && (
         <ul className="album-profile__links">
-          <li>
-            <Link to={`/edit/${props.artist}/${props.album}`} className="album-profile__link">
-              Edit album
-            </Link>
-          </li>
+          {!albumProfileState.userHasReviewed && (
+            <li className="album-profile__link-item">
+              <button className="album-profile__link" onClick={openAddReview}>
+                <span>Add review</span>
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            </li>
+          )}
 
-          {props.page != "add-review" && props.page != "edit-review" && !userHasReviewed && (
-            <li>
-              <Link to={`/add-review/${props.artist}/${props.album}`} className="album-profile__link">
-                Add review
+          {albumProfileState.userHasReviewed && (
+            <li className="album-profile__link-item">
+              <Link to={`/music/${artist}/${album}/${albumProfileState.userHasReviewed}`} className="album-profile__link">
+                <span>Read review</span>
+                <FontAwesomeIcon icon={faArrowRight} />
               </Link>
             </li>
           )}
 
-          {props.page != "album-edit-history" && (
-            <li>
-              <Link to={`/edit-history/${props.artist}/${props.album}`} className="album-profile__link">
-                Edit history
+          <li className="album-profile__link-item">
+            <button className="album-profile__link" onClick={openEditAlbum}>
+              <span>Edit album</span>
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+          </li>
+
+          {albumProfileState.page != "history" && (
+            <li className="album-profile__link-item">
+              <Link to={`/history/${artist}/${album}`} className="album-profile__link">
+                <span>Edit history</span>
+                <FontAwesomeIcon icon={faHistory} />
               </Link>
             </li>
           )}
@@ -88,4 +136,4 @@ function AlbumProfile(props) {
   )
 }
 
-export default AlbumProfile
+export default withRouter(AlbumProfile)

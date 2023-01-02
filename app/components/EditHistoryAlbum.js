@@ -1,10 +1,10 @@
 import React, {useEffect, useContext} from "react"
-import {Link, useParams} from "react-router-dom"
+import {Link, Redirect, useParams, withRouter} from "react-router-dom"
 import {useImmer} from "use-immer"
 import Axios from "axios"
 import useCancelToken from "react-use-cancel-token"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faUndoAlt} from "@fortawesome/free-solid-svg-icons"
+import {faUndoAlt, faImage, faEllipsisH} from "@fortawesome/free-solid-svg-icons"
 
 //Contexts
 import StateContext from "../contexts/StateContext"
@@ -13,9 +13,9 @@ import DispatchContext from "../contexts/DispatchContext"
 //Components
 import Page from "./Page"
 import Loading from "./Loading"
-import AlbumProfile from "./AlbumProfile"
+import AlbumProfileContext from "./AlbumProfileContext"
 
-function EditHistoryAlbum() {
+function EditHistoryAlbum(props) {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   const {newCancelToken, cancelPreviousRequest, isCancel} = useCancelToken()
@@ -64,10 +64,8 @@ function EditHistoryAlbum() {
           return
         }
         appDispatch({type: "flashMessage", value: e.message, warning: true})
-        setState(draft => {
-          draft.loading = false
-        })
         console.log(e)
+        props.history.push(`/music/${artist}/${album}`)
       }
     }
     getEdits()
@@ -102,13 +100,15 @@ function EditHistoryAlbum() {
           draft.editHistory[index].loading = false
           draft.editHistory.unshift(response.data.edit)
           draft.albumData.title = response.data.edit.data.title
+          draft.albumData.slug = response.data.edit.data.slug
           draft.albumData.type = response.data.edit.data.type
           draft.albumData.image = response.data.edit.data.image
           draft.albumData.releaseDate = response.data.edit.data.releaseDate
+          draft.albumData.tracklist = response.data.edit.data.tracklist
         })
 
         appDispatch({type: "flashMessage", value: response.data.message})
-
+        props.history.push(`/history/${artist}/${response.data.edit.data.slug}`)
         window.scrollTo(0, 0)
       } else {
         throw new Error(response.data.message)
@@ -185,7 +185,7 @@ function EditHistoryAlbum() {
 
   return (
     <Page title={`${state.albumData.artist.name} - ${state.albumData.title}`}>
-      <AlbumProfile albumData={state.albumData} artist={artist} album={album} page="album-edit-history" />
+      <AlbumProfileContext albumData={state.albumData} artist={artist} album={album} page="history" setEditHistoryState={setState} />
 
       {Boolean(state.editHistory.length) && (
         <div className="edit-history">
@@ -194,24 +194,52 @@ function EditHistoryAlbum() {
             return (
               <div className="edit-history__item" key={item._id}>
                 <span className="edit-history__header">
-                  {item.initial ? "Added" : "Edited"} by{" "}
-                  <Link className="edit-history__user" to={`/user/${item.user.slug}`}>
-                    {item.user.username}
-                  </Link>{" "}
-                  on{" "}
-                  <span className="edit-history__date">
-                    {item.date.getDate()}/{item.date.getMonth() + 1}/{item.date.getFullYear()}
-                  </span>{" "}
-                  at{" "}
-                  <span className="edit-history__time">
-                    {item.date.getHours()}:{String(item.date.getMinutes()).padStart(2, "0")}
+                  <span className="edit-history__by">
+                    {item.initial ? "Added" : "Edited"} by{" "}
+                    <Link className="edit-history__user" to={`/user/${item.user.slug}`}>
+                      {item.user.username}
+                    </Link>{" "}
                   </span>
+
+                  <span className="edit-history__on">
+                    <span className="edit-history__date">
+                      {item.date.getDate()}/{item.date.getMonth() + 1}/{item.date.getFullYear()}
+                    </span>{" "}
+                    at{" "}
+                    <span className="edit-history__time">
+                      {item.date.getHours()}:{String(item.date.getMinutes()).padStart(2, "0")}
+                    </span>
+                  </span>
+
+                  {(item.data.title != state.albumData.title || item.data.releaseDate.getDate() != state.albumData.releaseDate.getDate() || item.data.releaseDate.getMonth() != state.albumData.releaseDate.getMonth() || item.data.releaseDate.getFullYear() != state.albumData.releaseDate.getFullYear() || item.data.type != state.albumData.type || item.data.image != state.albumData.image) && (
+                    <button
+                      onClick={e => {
+                        revert(item._id)
+                      }}
+                      className="edit-history__revert button"
+                      disabled={item.loading}
+                    >
+                      {item.loading ? (
+                        <Loading fontSize="16" />
+                      ) : (
+                        <>
+                          <FontAwesomeIcon icon={faUndoAlt} />
+                        </>
+                      )}
+                    </button>
+                  )}
                 </span>
 
                 <div className="edit-history__body">
                   <div className="edit-history__image">
                     <span className="edit-history__change-data">
-                      <img src={item.data.image} alt={item.data.name ? item.data.name : item.data.title} />
+                      {Boolean(item.data.image) ? (
+                        <img src={item.data.image} alt={item.data.name ? item.data.name : item.data.title} />
+                      ) : (
+                        <div className="edit-history__placeholder">
+                          <FontAwesomeIcon icon={faImage} />
+                        </div>
+                      )}
                     </span>
                   </div>
 
@@ -233,34 +261,30 @@ function EditHistoryAlbum() {
                       <span className="edit-history__change-data">{item.data.type ? item.data.type : "-"}</span>
                     </div>
                   </div>
-                </div>
 
-                {(item.data.title != state.albumData.title || item.data.releaseDate.getDate() != state.albumData.releaseDate.getDate() || item.data.releaseDate.getMonth() != state.albumData.releaseDate.getMonth() || item.data.releaseDate.getFullYear() != state.albumData.releaseDate.getFullYear() || item.data.label != state.albumData.label || item.data.type != state.albumData.type || item.data.image != state.albumData.image) && (
-                  <div className="edit-history__footer">
-                    <button
-                      onClick={e => {
-                        revert(item._id)
-                      }}
-                      className="edit-history__revert button"
-                      disabled={item.loading}
-                    >
-                      {item.loading ? (
-                        <Loading fontSize="16" />
-                      ) : (
-                        <>
-                          <span>Revert</span> <FontAwesomeIcon icon={faUndoAlt} />
-                        </>
-                      )}
-                    </button>
-                  </div>
-                )}
+                  {Boolean(item.data.tracklist?.length) && (
+                    <div className="edit-history__change edit-history__change--tracklist">
+                      <span className="edit-history__change-label">Tracklist: </span>
+                      <ol className="edit-history__tracklist">
+                        {item.data.tracklist?.map((track, index) => {
+                          return (
+                            <li key={index} className="edit-history__track">
+                              <span>{track}</span>
+                            </li>
+                          )
+                        })}
+                      </ol>
+                    </div>
+                  )}
+                </div>
               </div>
             )
           })}
 
           {state.moreResults && (
             <button onClick={e => loadMore(e)} className="edit-history__more" disabled={state.loadingMoreResults}>
-              {state.loadingMoreResults ? <Loading fontSize="12" /> : "Load more"}
+              Load more
+              {state.loadingMoreResults ? <Loading fontSize="12" className="edit-history" /> : <FontAwesomeIcon icon={faEllipsisH} />}
             </button>
           )}
         </div>
@@ -269,4 +293,4 @@ function EditHistoryAlbum() {
   )
 }
 
-export default EditHistoryAlbum
+export default withRouter(EditHistoryAlbum)

@@ -2,6 +2,13 @@
   grid-column: 1/-1;
   display: grid;
   gap: 40px;
+  justify-content: center;
+  text-align: center;
+
+  @media only screen and (min-width: $smallMedium) {
+    justify-content: start;
+    text-align: left;
+  }
 
   @media only screen and (min-width: $large) {
     grid-column: 5/13;
@@ -41,10 +48,17 @@
 
   &__album {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     text-decoration: none;
     border: 1px solid $black;
     background-color: $black;
+    transition: border-color 250ms ease-out;
+    max-width: 300px;
+
+    @media only screen and (min-width: $smallMedium) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: unset;
+    }
   }
 
   &__image {
@@ -59,19 +73,23 @@
     place-items: center;
     font-size: 5rem;
     background-color: $black;
-    color: $grey;
+    color: color-mod($black tint(50%));
   }
 
   &__info {
     display: grid;
     gap: 10px;
-    padding: 10px;
+    padding: 50px 10px;
     justify-items: center;
     text-align: center;
     align-content: center;
     background-color: $black;
     color: $grey;
     text-transform: uppercase;
+
+    @media only screen and (min-width: $smallMedium) {
+      padding: 10px;
+    }
   }
 
   &__title {

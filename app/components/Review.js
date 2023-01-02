@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from "react"
-import {Link, useParams} from "react-router-dom"
+import {Link, Redirect, useParams, withRouter} from "react-router-dom"
 import Axios from "axios"
 import useCancelToken from "react-use-cancel-token"
 import ReactMarkdown from "react-markdown"
@@ -9,53 +9,23 @@ import {faHeart as farHeart} from "@fortawesome/free-regular-svg-icons"
 
 //Contexts & Reducers
 import StateContext from "../contexts/StateContext"
+import DispatchContext from "../contexts/DispatchContext"
 import ReviewStateContext from "../contexts/ReviewStateContext"
 import ReviewDispatchContext from "../contexts/ReviewDispatchContext"
 
 //Components
 import Page from "./Page"
 import Loading from "./Loading"
-import AlbumProfile from "./AlbumProfile"
+import AlbumProfileContext from "./AlbumProfileContext"
 import Comments from "./Comments"
 
-function Review() {
+function Review(props) {
   const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
   const reviewState = useContext(ReviewStateContext)
   const reviewDispatch = useContext(ReviewDispatchContext)
   const {newCancelToken, cancelPreviousRequest, isCancel} = useCancelToken()
   const {artist, album, review} = useParams()
-
-  useEffect(() => {
-    async function getReview() {
-      cancelPreviousRequest()
-      try {
-        const response = await Axios.get(`/artist/${artist}/album/${album}/review/${review}`, {cancelToken: newCancelToken()})
-
-        if (response.data.success) {
-          response.data.review.date = new Date(response.data.review.date)
-          response.data.review.album.releaseDate = new Date(response.data.review.album.releaseDate)
-          response.data.review.comments.map(comment => {
-            comment.date = new Date(comment.date)
-            comment.edit = {
-              body: "",
-              open: false,
-              submitting: false
-            }
-          })
-
-          reviewDispatch({type: "setReviewData", data: response.data.review})
-          reviewDispatch({type: "finishLoading"})
-        } else {
-          throw new Error(response.data.message)
-        }
-      } catch (e) {
-        console.log(e)
-        appDispatch({type: "flashMessage", value: e.message, warning: true})
-        reviewDispatch({type: "finishLoading"})
-      }
-    }
-    getReview()
-  }, [review])
 
   async function handleLike(e) {
     cancelPreviousRequest()
@@ -81,7 +51,7 @@ function Review() {
     }
   }
 
-  if (reviewState.isLoading) {
+  if (reviewState.loading) {
     return (
       <Page title="...">
         <Loading />
@@ -89,13 +59,16 @@ function Review() {
     )
   }
 
+  if (!reviewState.loading && !reviewState.reviewData) {
+    return <Redirect to={`/music/${artist}/album/${album}`} />
+  }
+
   return (
     <Page title={`${reviewState.reviewData.album.artist.name} - ${reviewState.reviewData.album.title}`}>
-      <AlbumProfile albumData={reviewState.reviewData.album} artist={artist} album={album} page="review" />
+      <AlbumProfileContext albumData={reviewState.reviewData.album} artist={artist} album={album} page="review" />
 
       <div className="review">
         <div className="review__section review__header">
-          <h3 className="review__title">{reviewState.reviewData.title}</h3>
           <span className="review__posted">
             Posted by{" "}
             <Link to={`/user/${reviewState.reviewData.author.slug}`} className="review__author">
@@ -104,9 +77,14 @@ function Review() {
             on {reviewState.reviewData.date.getDate()}/{reviewState.reviewData.date.getMonth() + 1}/{reviewState.reviewData.date.getFullYear()}
           </span>
           {appState.user.username == reviewState.reviewData.author.username && (
-            <Link to={`/edit/${artist}/${album}/${reviewState.reviewData._id}`} className="review__edit">
+            <button
+              className="review__edit"
+              onClick={e => {
+                reviewDispatch({type: "openEditReview"})
+              }}
+            >
               <FontAwesomeIcon icon={faEdit} />
-            </Link>
+            </button>
           )}
           {appState.user.username != reviewState.reviewData.author.username && (
             <button onClick={handleLike} className="review__like">
@@ -135,4 +113,4 @@ function Review() {
   )
 }
 
-export default Review
+export default withRouter(Review)

@@ -1,0 +1,311 @@
+.add-review {
+  z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: color-mod($black a(0.99));
+  display: grid;
+  align-items: center;
+  gap: 50px;
+  padding: 5rem 1rem;
+  overflow: auto;
+
+  &__close {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translateX(50%);
+    height: 100%;
+    width: $headerHeight;
+    height: $headerHeight;
+    place-items: center;
+    font-size: 2.5rem;
+    display: grid;
+    color: $red;
+    background-color: unset;
+    border: none;
+    cursor: pointer;
+    transition: color 250ms ease-out;
+
+    &:hover {
+      color: color-mod($red shade(50%));
+    }
+
+    @media only screen and (min-width: $mediumLarge) {
+      right: 0;
+      transform: translateX(0%);
+    }
+  }
+
+  &__form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto 1fr auto;
+    align-items: start;
+    justify-content: center;
+    gap: 25px;
+    margin: 0;
+    font-size: 1.125rem;
+    max-width: 1250px;
+    justify-self: center;
+    width: 100%;
+
+    @media only screen and (min-width: $mediumLarge) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media only screen and (min-width: $large) {
+      grid-template-columns: 1fr 2fr;
+      gap: 50px;
+    }
+  }
+
+  &__heading {
+    color: $white;
+    grid-column: 1/-1;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.5;
+
+    @media only screen and (min-width: $mediumLarge) {
+      margin-top: 0;
+    }
+  }
+
+  &__heading-artist,
+  &__heading-album {
+    font-size: 1.125rem;
+    font-weight: 600;
+    display: block;
+
+    @media only screen and (min-width: $mediumLarge) {
+      display: inline;
+    }
+  }
+
+  &__summary {
+    @media only screen and (min-width: $mediumLarge) {
+      grid-area: 2/1/3/2;
+    }
+
+    & > textarea {
+      resize: none;
+      min-height: calc(22px + 6rem);
+      font-weight: 500;
+    }
+  }
+
+  &__rating {
+    @media only screen and (min-width: $mediumLarge) {
+      grid-area: 3/1/4/2;
+    }
+    justify-self: start;
+
+    & option {
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+  }
+
+  &__review {
+    @media only screen and (min-width: $mediumLarge) {
+      grid-area: 2/2/5/3;
+    }
+    align-self: stretch;
+    grid-template-rows: auto 1fr;
+
+    & > textarea {
+      resize: none;
+      min-height: calc(22px + 27rem);
+      font-weight: 500;
+    }
+  }
+
+  &__tags {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    align-content: start;
+    max-width: 500px;
+    justify-self: center;
+    width: 100%;
+
+    @media only screen and (min-width: $mediumLarge) {
+      grid-area: 4/1/5/2;
+    }
+  }
+
+  &__tags-input-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__tags-input {
+    background-color: transparent;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid $white;
+    color: $white;
+    font-weight: 400;
+    padding: 5px;
+    width: 100%;
+    grid-column: 1/3;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__tags-add {
+    height: 100%;
+    width: auto;
+    padding: 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: transparent;
+    color: color-mod($white shade(50%));
+    transition: color 250ms ease-out;
+
+    &:hover {
+      background-color: transparent;
+      color: $white;
+    }
+  }
+
+  &__tags-list {
+    margin: 0;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    list-style: none;
+  }
+
+  &__tags-tag {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    position: relative;
+    color: $white;
+    font-weight: 400;
+    padding: 0;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    &:nth-child(odd) {
+      background-color: color-mod($black tint(18.75%));
+    }
+
+    &:nth-child(even) {
+      background-color: color-mod($black tint(12.5%));
+    }
+
+    &:hover {
+      &:not(:has(.add-album__tags-remove:hover)) {
+        .add-album__grip-lines {
+          color: color-mod($white shade(50%));
+        }
+      }
+    }
+  }
+
+  &__tags-name {
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__tags-remove {
+    height: 100%;
+    width: auto;
+    padding: 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    display: inline-grid;
+    background-color: transparent;
+    color: color-mod($white shade(50%));
+    transition: color 250ms ease-out;
+
+    &:hover {
+      background-color: transparent;
+      color: $white;
+    }
+  }
+
+  &__buttons {
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 25px;
+    justify-content: center;
+    margin-top: 25px;
+
+    @media only screen and (min-width: $medium) {
+      flex-direction: row;
+      margin-top: 0;
+    }
+  }
+
+  &__button {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1rem;
+    align-items: center;
+    justify-items: center;
+    padding: 10px;
+    color: $white;
+    background-color: color-mod($black tint(50%));
+    text-decoration: none;
+    font-size: 0.875rem;
+    line-height: 1;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 250ms ease-out;
+
+    &:hover {
+      background-color: $red;
+    }
+
+    &:disabled {
+      background-color: color-mod($black tint(75%));
+      cursor: auto;
+    }
+
+    &--cancel {
+      &:hover {
+        background-color: color-mod($black tint(25%));
+      }
+    }
+  }
+
+  &-enter {
+    opacity: 0;
+
+    &-active {
+      opacity: 1;
+      transition: opacity 250ms ease-out;
+    }
+  }
+
+  &-exit {
+    opacity: 1;
+
+    &-active {
+      opacity: 0;
+      transition: opacity 250ms ease-out;
+    }
+  }
+}

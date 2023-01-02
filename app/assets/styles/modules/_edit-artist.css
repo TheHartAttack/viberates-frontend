@@ -1,0 +1,30 @@
+.edit-artist {
+  @extend .edit-album;
+
+  &__form {
+    @media only screen and (min-width: $large) {
+      grid-template-columns: 1fr;
+    }
+
+    @media only screen and (min-width: $huge) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__inputs {
+    grid-area: 2/1/3/-1;
+  }
+
+  &__image-input {
+    grid-area: 3/1/4/-1;
+  }
+
+  &__image-placeholder,
+  &__image-preview {
+    aspect-ratio: 1.5/1;
+  }
+
+  &__buttons {
+    grid-area: 4/1/5/-1;
+  }
+}

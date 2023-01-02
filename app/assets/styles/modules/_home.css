@@ -32,14 +32,15 @@
     display: grid;
     gap: 5px;
     grid-column: 1/-1;
-    justify-self: center;
+    justify-self: start;
   }
 
   &__link {
     text-decoration: none;
     text-align: center;
     font-size: 0.875rem;
-    font-weight: $normal;
+    line-height: 1;
+    font-weight: 500;
     text-transform: uppercase;
     background-color: $red;
     color: $grey;

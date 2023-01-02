@@ -157,6 +157,7 @@
 
   &__none {
     color: $grey;
+    grid-column: 1/-1;
   }
 
   &__title {

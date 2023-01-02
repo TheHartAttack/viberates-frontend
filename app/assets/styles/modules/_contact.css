@@ -1,15 +1,35 @@
 .contact {
   grid-column: 1/-1;
+  max-width: 800px;
+  width: 100%;
+  justify-self: center;
+  padding-top: 25px;
 
-  @media only screen and (min-width: $medium) {
-    grid-column: 2/6;
-  }
-
-  @media only screen and (min-width: $large) {
-    grid-column: 3/5;
+  @media only screen and (min-width: $smallMedium) {
+    padding-top: 0;
   }
 
   & #contact-message {
-    min-height: 10rem;
+    min-height: 15rem;
+    font-weight: 500;
+  }
+
+  &__submit {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding: 10px;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: 500;
+    justify-self: center;
+
+    &:hover {
+      background-color: color-mod($red shade(25%));
+    }
+
+    &:disabled {
+      background-color: color-mod($black tint(75%));
+    }
   }
 }

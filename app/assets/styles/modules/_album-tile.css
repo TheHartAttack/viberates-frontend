@@ -1,10 +1,15 @@
 .album-tile {
   position: relative;
   aspect-ratio: 1/1;
-  background-color: $black;
+  background-color: color-mod($black tint(75%));
   border: 1px solid $black;
   cursor: pointer;
   overflow: hidden;
+  transition: border-color 250ms ease-out;
+
+  &:hover {
+    border-color: $red;
+  }
 
   &__image {
     width: 100%;
@@ -18,6 +23,7 @@
     place-items: center;
     font-size: 4rem;
     color: $grey;
+    color: color-mod($black tint(50%));
   }
 
   &__info {
@@ -39,9 +45,9 @@
     opacity: 0;
     transition: opacity 250ms ease-out;
 
-    &--no-image {
+    /*&--no-image {
       opacity: 1;
-    }
+    }*/
   }
 
   &__title {

@@ -9,7 +9,13 @@
   place-items: center;
   background-color: $black;
   color: $grey;
+  border: 2px solid transparent;
   clip-path: circle(50%);
+  transition: border-color 250ms ease-out;
+
+  &:hover {
+    border-color: $red;
+  }
 
   & > svg {
     font-size: 4rem;
@@ -33,6 +39,8 @@
     justify-items: center;
     gap: 10px;
     opacity: 1;
+    font-size: 0.875rem;
+    font-weight: 400;
     transition: background-color 250ms ease-out, color 250ms ease-out;
 
     &:hover {
@@ -58,10 +66,8 @@
     transition: background-color 250ms ease-out, color 250ms ease-out;
 
     & > span {
-      font-size: 0.875rem;
-      line-height: 0.875rem;
-      position: relative;
-      top: 1px;
+      font-size: 0.75rem;
+      line-height: 0.75rem;
     }
 
     & > svg {

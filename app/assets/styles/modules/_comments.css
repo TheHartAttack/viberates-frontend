@@ -13,7 +13,7 @@
   &__input {
     resize: none;
     padding: 10px;
-    background-color: unset;
+    background-color: $white;
     width: 100%;
     font-size: 1rem;
     line-height: 1.5rem;
@@ -107,24 +107,25 @@
   }
 
   &__author {
-    font-size: 0.875rem;
-    line-height: 0.875rem;
+    font-size: 1rem;
+    line-height: 1rem;
     text-decoration: none;
     color: $black;
-    font-weight: $bold;
+    font-weight: 600;
   }
 
   &__time {
-    font-size: 0.625rem;
-    line-height: 0.625rem;
+    font-size: 0.75rem;
+    line-height: 0.75rem;
     color: color-mod($black tint(50%));
     margin-left: 0.25rem;
   }
 
   &__body {
     grid-area: 2/2/3/3;
-    font-size: 0.875rem;
-    line-height: 0.875rem;
+    font-size: 1rem;
+    line-height: 1rem;
+    font-weight: 400;
   }
 
   &__actions {
@@ -148,13 +149,13 @@
 
   &__edit-input {
     resize: none;
-    background-color: unset;
+    background-color: $white;
     width: 100%;
-    font-size: 0.875rem;
-    font-weight: $normal;
+    font-size: 1rem;
+    font-weight: 400;
     line-height: 1rem;
     box-sizing: border-box;
-    padding: 5px;
+    padding: 10px;
   }
 
   &__loading {

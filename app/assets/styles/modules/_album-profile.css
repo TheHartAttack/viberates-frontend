@@ -25,15 +25,15 @@
     border: 1px solid $black;
     box-sizing: border-box;
     max-width: 500px;
-    min-width: 200px;
   }
 
-  &__no-image {
+  &__placeholder {
     @extend &__image;
+    border: none;
     display: grid;
     place-items: center;
     font-size: 5rem;
-    background-color: $black;
+    background-color: color-mod($black tint(75%));
     color: $grey;
   }
 
@@ -48,6 +48,9 @@
     }
 
     @media only screen and (min-width: $large) {
+      justify-content: center;
+      align-content: center;
+      height: 100%;
       justify-self: start;
     }
   }
@@ -80,17 +83,31 @@
   }
 
   &__artist {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
+    font-size: 1.75rem;
+    line-height: 1.75rem;
     text-transform: uppercase;
     text-decoration: none;
     color: $black;
   }
 
   &__date {
-    font-size: 1.125rem;
-    line-height: 1.125rem;
-    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+  }
+
+  &__tracklist {
+    padding-left: 1.75rem;
+    margin: 0;
+    color: color-mod($black tint(37.5%));
+  }
+
+  &__track {
+    font-weight: 400;
+
+    &::marker {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
   }
 
   &__rating-tags {
@@ -105,45 +122,59 @@
   }
 
   &__tags {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     justify-items: start;
+    justify-content: center;
     gap: 5px;
-    grid-area: 1/2/2/3;
 
     @media only screen and (min-width: $medium) {
-      grid-area: unset;
-      grid-auto-flow: column;
+      justify-content: flex-start;
     }
   }
 
   &__tag {
-    font-size: 0.625rem;
-    height: 0.625rem;
+    font-size: 0.75rem;
+    height: 0.75rem;
+    font-weight: 400;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 5px;
+    padding: 5px 7.5px;
     color: $grey;
     background-color: $red;
-    border-radius: 10px;
+    border-radius: 20px;
     transition: background-color 250ms ease-out;
 
     &:hover {
-      background-color: color-mod($red shade(50%));
+      background-color: color-mod($red shade(25%));
     }
   }
 
   &__rating {
     background-color: $black;
     color: $grey;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: $bold;
-    height: 4rem;
-    width: 4rem;
+    height: 5rem;
+    width: 5rem;
     line-height: 4rem;
     aspect-ratio: 1/1;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  &__hr {
+    height: 1px;
+    width: 50%;
+    background-color: color-mod($black tint(75%));
+    margin: 20px 0;
+    grid-column: 1/-1;
+    justify-self: center;
+
+    @media only screen and (min-width: $large) {
+      justify-self: start;
+    }
   }
 
   &__links {
@@ -152,30 +183,54 @@
     grid-column: 1/-1;
     gap: 5px;
     justify-content: start;
-    margin-top: 20px;
-    margin-bottom: -10px;
-    grid-auto-flow: column;
+    grid-auto-flow: unset;
     justify-content: center;
+
+    @media only screen and (min-width: $smallMedium) {
+      grid-auto-flow: column;
+    }
 
     @media only screen and (min-width: $large) {
       grid-auto-flow: unset;
       justify-content: start;
-      margin-bottom: 0;
     }
   }
 
+  &__link-item {
+    display: grid;
+    text-align: center;
+  }
+
   &__link {
-    display: inline-block;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1rem;
+    align-items: center;
+    justify-items: center;
     background-color: color-mod($black tint(50%));
-    padding: 5px 10px;
+    padding: 7.5px 10px;
     color: $grey;
     text-decoration: none;
     font-size: 0.625rem;
     text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    position: relative;
     transition: background-color 250ms ease-out;
 
     &:hover {
       background-color: color-mod($black tint(25%));
+    }
+
+    & > span {
+      position: relative;
+      top: 1px;
+    }
+
+    & > svg {
+      font-size: 0.875rem;
     }
   }
 

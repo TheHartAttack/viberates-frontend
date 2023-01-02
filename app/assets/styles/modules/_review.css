@@ -4,12 +4,16 @@
   gap: 20px;
 
   @media only screen and (min-width: $large) {
-    grid-column: 3/7;
+    grid-column: 5/13;
+  }
+
+  @media only screen and (min-width: $huge) {
+    grid-column: 4/10;
   }
 
   &__section {
     display: grid;
-    gap: 5px;
+    gap: 10px;
   }
 
   &__header {
@@ -18,34 +22,32 @@
     align-items: flex-start;
   }
 
-  &__title {
-    text-transform: uppercase;
-    font-size: 1.5rem;
-    line-height: 1.5rem;
-  }
-
   &__posted {
     color: color-mod($black tint(50%));
-    font-size: 0.625rem;
-    height: 0.625rem;
+    font-size: 0.875rem;
+    height: 0.875rem;
+    font-weight: 500;
     grid-column: 1/2;
   }
 
   &__author {
     text-decoration: none;
     color: color-mod($black tint(25%));
-    font-weight: $bold;
+    font-weight: 500;
   }
 
   &__edit {
     grid-column: 2/3;
-    grid-row: 1/3;
+    grid-row: 1/2;
     padding: 5px;
-    color: $red;
+    color: color-mod($black tint(50%));
+    background: none;
+    border: none;
+    cursor: pointer;
     transition: color 250ms ease-out;
 
     &:hover {
-      color: color-mod($red shade(25%));
+      color: color-mod($black tint(25%));
     }
   }
 
@@ -81,7 +83,8 @@
     grid-template-columns: 1fr auto;
     background-color: color-mod($black tint(25%));
     color: $grey;
-    place-items: center;
+    align-items: center;
+    justify-content: start;
   }
 
   &__summary {

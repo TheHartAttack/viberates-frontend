@@ -13,7 +13,7 @@ function FormInput(props) {
         ) : (
           ""
         )}
-        <input onChange={props.onChange} onFocus={props.onFocus ? props.onFocus : null} onBlur={props.onBlur ? props.onBlur : null} autoComplete="off" className="form__input" type={props.type} name={props.name} id={`${props.form ? `${props.form}-` : ""}${props.name}`} placeholder={`${props.placeholder ? props.placeholder : ""}`} value={props.value} />
+        <input onChange={props.onChange} onFocus={props.onFocus ? props.onFocus : null} autoFocus={props.autoFocus} onBlur={props.onBlur ? props.onBlur : null} autoComplete="off" className="form__input" type={props.type} name={props.name} id={`${props.form ? `${props.form}-` : ""}${props.name}`} placeholder={`${props.placeholder ? props.placeholder : ""}`} value={props.value} />
       </div>
     )
   }
@@ -52,7 +52,7 @@ function FormInput(props) {
             {props.label}
           </label>
         )}
-        <select onChange={props.onChange} className={`form__input form__select ${props.className ? `form__select--${props.className}` : ""} ${props.value}`} name={props.name} id={`${props.form ? `${props.form}-` : ""}${props.name}`} value={props.value}>
+        <select onChange={props.onChange} className={`form__input form__select ${props.className ? props.className : ""}`} name={props.name} id={`${props.form ? `${props.form}-` : ""}${props.name}`} value={props.value}>
           {props.options.map((option, index) => {
             return (
               <option key={index} value={option}>

@@ -1,18 +1,28 @@
 .edit-history {
   grid-column: 1/-1;
   display: grid;
+  grid-template-columns: minmax(0px, 1fr);
   gap: 20px;
 
+  @media only screen and (min-width: $smallMedium) {
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  }
+
   @media only screen and (min-width: $large) {
-    grid-column: 3/7;
+    grid-column: 5/13;
+  }
+
+  @media only screen and (min-width: $huge) {
+    grid-column: 4/13;
   }
 
   &__title {
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
     font-weight: $normal;
-    font-size: 1.25rem;
-    height: 1.25rem;
+    font-size: 1rem;
+    height: 1rem;
+    grid-column: 1/-1;
   }
 
   &__none {
@@ -34,42 +44,101 @@
     color: $grey;
     display: grid;
     gap: 20px;
+    align-self: start;
   }
 
   &__header {
     font-size: 0.75rem;
     font-weight: $light;
     justify-self: stretch;
-    text-align: center;
+    text-align: left;
     border-bottom: 1px dashed color-mod($grey a(0.25));
     padding-bottom: 20px;
     grid-column: 1/-1;
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(2, 1fr);
+    color: color-mod($black tint(50%));
+  }
+
+  &__by {
+    grid-area: 1/1/2/2;
+    justify-self: start;
+  }
+
+  &__on {
+    grid-area: 2/1/3/2;
+    justify-self: start;
   }
 
   &__user {
     text-decoration: none;
-    color: $grey;
-    font-weight: $bold;
+    color: color-mod($black tint(50%));
+    font-weight: 500;
+    transition: color 250ms ease-out;
+
+    &:hover {
+      color: color-mod($black tint(75%));
+    }
   }
 
   &__body {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 20px;
-    align-items: center;
-    justify-items: flex-start;
-    justify-self: center;
+
+    @media only screen and (min-width: $smallMedium) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   &__details {
     display: grid;
     gap: 20px;
+    align-content: start;
+  }
+
+  &__tracklist {
+    padding-left: 1.75rem;
+    box-sizing: border-box;
+    margin: 0;
+    gap: 2rem;
+
+    @media only screen and (min-width: $smallMedium) {
+      columns: 2;
+    }
+  }
+
+  &__track {
+    & > span {
+      white-space: nowrap;
+      overflow: hidden;
+      display: block;
+      text-overflow: ellipsis;
+      padding-right: 1rem;
+    }
+
+    &::marker {
+      color: color-mod($black tint(50%));
+    }
+  }
+
+  &__change {
+    display: flex;
+    flex-direction: column;
+
+    &--tracklist {
+      grid-column: 1/-1;
+      max-width: 100%;
+    }
   }
 
   &__change-label {
     grid-column: 1/-1;
-    font-size: 0.875rem;
-    font-weight: $light;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: color-mod($grey shade(50%));
+    margin-bottom: 2px;
   }
 
   &__change-data {
@@ -77,48 +146,49 @@
 
     & > img {
       width: 100%;
-      max-width: 200px;
-      border: 1px solid color-mod($grey a(0.25));
+      border: 1px solid color-mod($black tint(50%));
+      box-sizing: border-box;
     }
 
     &--artist-image > img {
-      max-width: 300px;
       width: 100%;
     }
   }
 
-  &__footer {
-    display: grid;
-    gap: 10px;
-    align-content: center;
+  &__placeholder {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    padding-top: 20px;
-    border-top: 1px dashed color-mod($grey a(0.25));
+    border: 1px solid color-mod($black tint(50%));
+    box-sizing: border-box;
+    font-size: 2.5rem;
+    background-color: color-mod($black tint(25%));
+    height: 100%;
+    aspect-ratio: 1/1;
+    color: color-mod($black tint(50%));
 
-    & > .loading {
-      height: 2.25rem;
-      display: grid;
-      align-items: center;
+    &--artist {
+      aspect-ratio: 1.5/1;
     }
   }
 
   &__revert {
-    width: 100px;
-    height: calc(1rem + 20px);
     cursor: pointer;
     background-color: $red;
     border: none;
     color: $grey;
-    padding: 10px;
     transition: all 250ms ease-out;
-    display: grid;
-    grid-template-columns: 1fr 1rem;
-    justify-items: center;
-    align-items: center;
     gap: 10px;
+    grid-area: 1/2/3/3;
+    justify-self: end;
+    align-self: center;
+    height: 2rem;
+    width: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    & > span {
-      line-height: 1rem;
+    & > svg {
     }
 
     &:hover {
@@ -133,8 +203,8 @@
   }
 
   &__more {
-    width: 100px;
     justify-self: center;
+    grid-column: 1/-1;
     cursor: pointer;
     border: none;
     background-color: $red;
@@ -142,8 +212,23 @@
     padding: 10px;
     font-size: 0.75rem;
     line-height: 0.75rem;
-    font-weight: $normal;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1rem;
+    align-items: center;
+    justify-items: center;
     transition: background-color 250ms ease-out;
+
+    & > span {
+      position: relative;
+      top: 2px;
+    }
+
+    & > svg {
+      height: 0.75rem;
+    }
 
     &:hover {
       background-color: color-mod($red shade(25%));

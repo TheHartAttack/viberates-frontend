@@ -4,7 +4,7 @@ import Axios from "axios"
 import useCancelToken from "react-use-cancel-token"
 import {useImmer} from "use-immer"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons"
+import {faPlus, faEnvelope} from "@fortawesome/free-solid-svg-icons"
 
 //Contexts
 import StateContext from "../contexts/StateContext"
@@ -86,9 +86,8 @@ function Home(props) {
           <>
             <div className="home-section home-section--sidebar home-section--reviews">
               <div className="home-section__header">
-                <h2 className="home-section__title">Recent Reviews</h2>
-                <Link to="/recent-reviews" className="home-section__view-all-link">
-                  View all
+                <Link to="/recent-reviews" className="home-section__title">
+                  <h2>Recent Reviews</h2>
                 </Link>
               </div>
 
@@ -106,7 +105,7 @@ function Home(props) {
                 <li>
                   <Link to="/add-artist" className="home__link">
                     Add artist to database
-                    <FontAwesomeIcon icon={faArrowRight} />
+                    <FontAwesomeIcon icon={faPlus} />
                   </Link>
                 </li>
               )}
@@ -114,7 +113,7 @@ function Home(props) {
                 <li>
                   <Link to="/contact" className="home__link">
                     Contact admin
-                    <FontAwesomeIcon icon={faArrowRight} />
+                    <FontAwesomeIcon icon={faEnvelope} />
                   </Link>
                 </li>
               )}
@@ -126,11 +125,10 @@ function Home(props) {
       <div className="home home--right">
         {Boolean(state.hotAlbums.length) && (
           <>
-            <div className="home-section">
+            <div className="home-section home-section--hot-albums">
               <div className="home-section__header">
-                <h2 className="home-section__title">Hot Albums</h2>
-                <Link to="/hot-albums" className="home-section__view-all-link">
-                  View all
+                <Link to="/hot-albums" className="home-section__title">
+                  <h2>Hot Albums</h2>
                 </Link>
               </div>
 
@@ -143,11 +141,10 @@ function Home(props) {
 
         {Boolean(state.topRated.length) && (
           <>
-            <div className="home-section">
+            <div className="home-section home-section--top-rated">
               <div className="home-section__header">
-                <h2 className="home-section__title">Top Rated</h2>
-                <Link to="/top-rated" className="home-section__view-all-link">
-                  View all
+                <Link to="/top-rated" className="home-section__title">
+                  <h2>Top Rated</h2>
                 </Link>
               </div>
 
@@ -160,11 +157,10 @@ function Home(props) {
 
         {Boolean(state.newReleases.length) && (
           <>
-            <div className="home-section">
+            <div className="home-section home-section--new-releases">
               <div className="home-section__header">
-                <h2 className="home-section__title">New Releases</h2>
-                <Link to="/new-releases" className="home-section__view-all-link">
-                  View all
+                <Link to="/new-releases" className="home-section__title">
+                  <h2>New Releases</h2>
                 </Link>
               </div>
 
@@ -179,9 +175,8 @@ function Home(props) {
           <>
             <div className="home-section home-section--user">
               <div className="home-section__header">
-                <h2 className="home-section__title">Top Users</h2>
-                <Link to="/top-users" className="home-section__view-all-link">
-                  View all
+                <Link to="/top-users" className="home-section__title">
+                  <h2>Top Users</h2>
                 </Link>
               </div>
 

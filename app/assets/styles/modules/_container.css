@@ -1,17 +1,27 @@
 .container {
   max-width: calc($containerWidth + 100px);
-  min-height: calc(100vh - $headerHeight - 64px);
+  min-height: calc(100vh - $headerHeight - 66px);
   width: 100%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 50px;
+  gap: 50px 0px;
   align-content: flex-start;
   align-items: flex-start;
   box-sizing: border-box;
 
+  @media only screen and (min-width: $small) {
+    gap: 50px 10px;
+  }
+
+  @media only screen and (min-width: $smallMedium) {
+    padding: 25px;
+    gap: 50px 25px;
+  }
+
   @media only screen and (min-width: $medium) {
     padding: 50px;
+    gap: 50px;
   }
 }
