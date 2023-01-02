@@ -30,7 +30,7 @@
 
   &__image-preview {
     width: 100%;
-    aspect-ratio: 1/1;
+    aspect-ratio: 1.5/1;
     object-fit: cover;
   }
 
