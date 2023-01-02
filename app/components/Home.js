@@ -38,8 +38,6 @@ function Home(props) {
       try {
         const response = await Axios.get("/home", {cancelToken: newCancelToken()})
 
-        console.log(response.data)
-
         if (response.data.success) {
           response.data.recentReviews.reviews.map(review => {
             review.date = new Date(review.date)

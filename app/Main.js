@@ -5,7 +5,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom"
 import {CSSTransition} from "react-transition-group"
 import _ from "lodash"
 import Axios from "axios"
-Axios.defaults.baseURL = process.env.BACKENDURL || "https://viberates.onrender.com"
+Axios.defaults.baseURL = process.env.BACKENDURL
 // Axios.defaults.baseURL = "https://viberates.onrender.com"
 
 //Stylesheet
