@@ -98,6 +98,7 @@
   &__tag {
     font-size: 0.75rem;
     height: 0.75rem;
+    line-height: 0.75rem;
     font-weight: 400;
     text-transform: uppercase;
     text-decoration: none;
