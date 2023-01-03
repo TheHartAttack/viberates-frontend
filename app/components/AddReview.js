@@ -178,7 +178,7 @@ function AddReview() {
 
         <div className="add-review__buttons">
           <button
-            className="button add-review__cancel"
+            className="button add-review__button add-review__button--cancel"
             type="button"
             onClick={e => {
               reviewDispatch({type: "finishAddReview"})
@@ -187,7 +187,7 @@ function AddReview() {
             <span>Cancel</span>
             <FontAwesomeIcon icon={faTimes} />
           </button>
-          <FormSubmit className="add-review__submit" icon={faSave} submitting={albumProfileState.addReview.submitting} disabled={!albumProfileState.addReview.summary || !albumProfileState.addReview.rating}>
+          <FormSubmit className="add-review__button add-review__button--submit add-review__submit" icon={faSave} submitting={albumProfileState.addReview.submitting} disabled={!albumProfileState.addReview.summary || !albumProfileState.addReview.rating}>
             <span>Save</span>
           </FormSubmit>
         </div>

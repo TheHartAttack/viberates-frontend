@@ -285,6 +285,8 @@
     }
 
     &--cancel {
+      background-color: color-mod($black tint(50%));
+
       &:hover {
         background-color: color-mod($black tint(25%));
       }
