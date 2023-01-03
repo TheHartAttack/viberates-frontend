@@ -123,7 +123,7 @@ function AddArtist(props) {
           </label>
 
           {state.preview ? (
-            <img className="image-input__preview add-artist__image-preview" src={state.preview} alt={state.image.name ? state.image.name : ""} />
+            <img className="image-input__preview add-artist__image-preview" src={state.preview} alt={state.name ? state.name : ""} />
           ) : (
             <div className="image-input__placeholder add-artist__image-placeholder">
               <FontAwesomeIcon icon={faImage} />
