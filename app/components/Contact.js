@@ -79,13 +79,7 @@ function Contact() {
 
   return (
     <Page title="Contact">
-      <form
-        onSubmit={handleSubmit}
-        onKeyUp={e => {
-          console.log(e)
-        }}
-        className="form contact"
-      >
+      <form onSubmit={handleSubmit} className="form contact">
         <h3 className="form__title">Contact admin</h3>
 
         {!appState.user.token && (
@@ -129,10 +123,6 @@ function Contact() {
           }}
         />
 
-        {/* <button disabled={!state.content} className={`button contact__submit ${state.submitting ? "contact__submit--submitting" : ""}`}>
-          <span>Send message</span>
-          {state.submitting ? <Loading /> : <FontAwesomeIcon icon={faEnvelope} />}
-        </button> */}
         <FormSubmit className="contact__submit" icon={faEnvelope} submitting={state.submitting} disabled={!state.content}>
           <span>Send message</span>
         </FormSubmit>

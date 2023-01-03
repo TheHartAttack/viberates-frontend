@@ -1,7 +1,7 @@
 import React, {useEffect, useContext, useRef} from "react"
 import {withRouter} from "react-router-dom"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faPlus, faPlusCircle, faTimes, faMinusCircle} from "@fortawesome/free-solid-svg-icons"
+import {faPlus, faPlusCircle, faTimes, faMinusCircle, faSave} from "@fortawesome/free-solid-svg-icons"
 import Select from "react-select"
 
 //Contexts
