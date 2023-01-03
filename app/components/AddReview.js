@@ -15,6 +15,18 @@ function AddReview() {
   const albumProfileState = useContext(AlbumProfileStateContext)
   const albumProfileDispatch = useContext(AlbumProfileDispatchContext)
   const tagInput = useRef("")
+  const ratingOptions = [
+    {value: 1, label: "1"},
+    {value: 2, label: "2"},
+    {value: 3, label: "3"},
+    {value: 4, label: "4"},
+    {value: 5, label: "5"},
+    {value: 6, label: "6"},
+    {value: 7, label: "7"},
+    {value: 8, label: "8"},
+    {value: 9, label: "9"},
+    {value: 10, label: "10"}
+  ]
 
   useEffect(() => {
     document.addEventListener("keyup", searchKeypressHandler)
@@ -108,8 +120,7 @@ function AddReview() {
             Rating
           </label>
           <Select
-            value={albumProfileState.addReview.rating}
-            defaultValue={{value: 1, label: "1"}}
+            value={ratingOptions.filter(option => option.value == albumProfileState.addReview.rating)}
             placeholder="-"
             onChange={selected => {
               albumProfileDispatch({type: "setAddReviewRating", data: selected.value})
@@ -181,7 +192,7 @@ function AddReview() {
             className="button add-review__button add-review__button--cancel"
             type="button"
             onClick={e => {
-              reviewDispatch({type: "finishAddReview"})
+              albumProfileDispatch({type: "finishAddReview"})
             }}
           >
             <span>Cancel</span>

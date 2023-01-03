@@ -121,7 +121,6 @@ function EditReview() {
           </label>
           <Select
             value={ratingOptions.filter(option => option.value == reviewState.edit.rating)}
-            defaultValue={{value: 1, label: "1"}}
             placeholder="-"
             onChange={selected => {
               reviewDispatch({type: "setEditReviewRating", data: selected.value})

@@ -279,10 +279,7 @@
       background-color: $red;
     }
 
-    &:disabled {
-      background-color: color-mod($black tint(75%));
-      cursor: auto;
-    }
+    
 
     &--cancel {
       background-color: color-mod($black tint(50%));
@@ -290,6 +287,19 @@
       &:hover {
         background-color: color-mod($black tint(25%));
       }
+    }
+
+    &--submit {
+      background-color: $red;
+
+      &:hover {
+        background-color: color-mod($red shade(50%));
+      }
+    }
+    
+    &:disabled {
+      background-color: color-mod($black tint(75%));
+      cursor: auto;
     }
   }
 
