@@ -187,7 +187,7 @@ function AddReview() {
             <span>Cancel</span>
             <FontAwesomeIcon icon={faTimes} />
           </button>
-          <FormSubmit className="add-review__submit" icon={faSave} submitting={reviewState.edit.submitting} disabled={!reviewState.edit.summary || !reviewState.edit.rating}>
+          <FormSubmit className="add-review__submit" icon={faSave} submitting={albumProfileState.addReview.submitting} disabled={!albumProfileState.addReview.summary || !albumProfileState.addReview.rating}>
             <span>Save</span>
           </FormSubmit>
         </div>
