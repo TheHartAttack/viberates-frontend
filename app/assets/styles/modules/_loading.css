@@ -74,6 +74,7 @@
   &--generated {
     height: 3rem;
     padding: 50px;
+    margin: 0 auto;
 
     & > svg {
       height: 3rem;

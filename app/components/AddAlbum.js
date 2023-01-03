@@ -63,8 +63,6 @@ function AddAlbum(props) {
 
           const response = await Axios.post(`/add-album/${artist}`, formData, {cancelToken: newCancelToken(), headers: {"Content-Type": "multipart/form-data", authorization: appState.user.token}})
 
-          console.log(response.data)
-
           if (response.data.success) {
             artistDispatch({type: "setAddAlbumTitle", data: ""})
             artistDispatch({type: "setAddAlbumType", data: "Studio"})
@@ -162,7 +160,7 @@ function AddAlbum(props) {
           </label>
 
           {artistState.addAlbum.preview ? (
-            <img className="image-input__preview add-album__image-preview" src={artistState.addAlbum.preview} alt={artistState.addAlbum.image.name ? artistState.addAlbum.image.name : ""} />
+            <img className="image-input__preview add-album__image-preview" src={artistState.addAlbum.preview} alt={artistState.addAlbum.title ? artistState.addAlbum.title : ""} />
           ) : (
             <div className="image-input__placeholder add-album__image-placeholder">
               <FontAwesomeIcon icon={faImage} />
