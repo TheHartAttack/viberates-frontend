@@ -198,6 +198,7 @@ function AddAlbum(props) {
               type="date"
               label="Release Date"
               name="releaseDate"
+              className="add-album__date-input"
               releaseDate={artistState.addAlbum.releaseDate}
               onChange={date => {
                 artistDispatch({type: "setAddAlbumReleaseDate", data: date})

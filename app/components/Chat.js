@@ -75,7 +75,7 @@ function Chat() {
   }, [state.loadCount])
 
   useEffect(() => {
-    socket.current = io(process.env.BACKENDURL || "https://viberates.herokuapp.com")
+    socket.current = io(process.env.BACKENDURL || "https://viberates.onrender.com")
 
     socket.current.on("chatFromServer", message => {
       shouldScroll()

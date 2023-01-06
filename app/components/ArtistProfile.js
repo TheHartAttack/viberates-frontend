@@ -46,6 +46,8 @@ function ArtistProfile(props) {
 
           const response = await Axios.post(`/edit/artist/${artist}`, formData, {cancelToken: newCancelToken(), headers: {"Content-Type": "multipart/form-data", authorization: appState.user.token}})
 
+          console.log(response.data)
+
           if (response.data.success) {
             appDispatch({type: "flashMessage", value: response.data.message})
             artistProfileDispatch({type: "setArtistName", data: response.data.artist.name})

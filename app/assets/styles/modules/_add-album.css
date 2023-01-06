@@ -128,7 +128,13 @@
     }
   }
 
+  &__date-input {
+    height: calc(1.5rem + 20px);
+  }
+
   &__type-select {
+    height: calc(1.5rem + 20px);
+
     @media only screen and (min-width: $medium) {
       justify-self: flex-start;
     }
@@ -138,6 +144,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
+    align-items: start;
 
     @media only screen and (min-width: $small) {
       grid-template-columns: repeat(2, 1fr);
